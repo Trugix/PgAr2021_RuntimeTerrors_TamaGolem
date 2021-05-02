@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Golem
 {
 	public final static int VITA_MAX = 10;

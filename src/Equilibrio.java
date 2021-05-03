@@ -1,10 +1,11 @@
 import it.unibs.fp.mylib.*;
+
+import java.awt.font.NumericShaper;
 import java.util.*;
 
 public class Equilibrio
 {
 	private static final ArrayList<Nodo> nodi = new ArrayList<>();
-	//private static Set<Arco> archi = new HashSet<Arco>();
 	private static ArrayList<Arco> archi = new ArrayList<>();
 	
 	public static ArrayList<Nodo> getNodi()
@@ -51,6 +52,8 @@ public class Equilibrio
 		{
 			a.stampaArco();
 		}
+		riordinaNodi();
+		equilibraNodi();
 		for (Nodo a : nodi)
 		{
 			a.stampaNodo();

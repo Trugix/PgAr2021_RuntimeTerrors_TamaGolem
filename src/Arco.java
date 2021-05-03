@@ -9,6 +9,12 @@ public class Arco
 		this.fine = fine;
 		this.peso = peso;
 	}
+	public Arco(Arco a)
+	{
+		this.inizio = a.getInizio();
+		this.fine = a.getFine();
+		this.peso = a.getPeso();
+	}
 	
 	public Nodo getInizio()
 	{
@@ -18,6 +24,13 @@ public class Arco
 	public void setInizio(Nodo inizio)
 	{
 		this.inizio = inizio;
+	}
+	
+	public void invertiInizioFine()
+	{
+		Arco a= new Arco(this);
+		this.inizio=a.getFine();
+		this.fine= a.getInizio();
 	}
 	
 	public void setFixed(boolean t)

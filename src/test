@@ -1,6 +1,0 @@
-n=numero da distribuire;
-for(each arco in nodo)
-{
-    arco.potenza=random(-n, n);
-    n=n-arco.potenza;
-}

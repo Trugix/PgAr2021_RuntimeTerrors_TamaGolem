@@ -12,6 +12,12 @@ public class Nodo
 		this.id = id;
 	}
 	
+	public Nodo(Nodo n)
+	{
+		this.nome = n.getNome();
+		this.id = n.getId();
+	}
+	
 	public String getNome()
 	{
 		return nome;

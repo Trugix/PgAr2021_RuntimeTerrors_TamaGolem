@@ -7,16 +7,9 @@ public class Equilibrio
 	//private static Set<Arco> archi = new HashSet<Arco>();
 	private static ArrayList<Arco> archi = new ArrayList<>();
 	
-	@Override
-	public int hashCode()
+	public static ArrayList<Nodo> getNodi()
 	{
-		return super.hashCode();
-	}
-	
-	@Override
-	public boolean equals(Object obj)
-	{
-		return super.equals(obj);
+		return nodi;
 	}
 	
 	public static void generaEquilibrio(/*numero elementi*/)
@@ -47,8 +40,8 @@ public class Equilibrio
 					if (!trovato)
 					{
 						archi.add(a);
-						n.setArray(a);
-						a.getFine().setArray(a);
+						n.setArray(new Arco (a));
+						a.getFine().setArray(new Arco (a));
 						trovato = false;
 					}
 				}
@@ -61,6 +54,78 @@ public class Equilibrio
 		for (Nodo a : nodi)
 		{
 			a.stampaNodo();
+		}
+	}
+	
+	public static void equilibraNodi ()
+	{
+		int pesoMax = 8, pesoForte=0,pesoDebole=0;
+		double bonusPos = 0;
+		boolean last=false,secondToLast=false;
+		for (Nodo n: nodi)
+		{
+			int i=0;
+			pesoForte=0;
+			pesoDebole=0;
+			for (Arco a: n.getContatti())
+			{
+				
+				if (i==n.getContatti().size()-1) last=true;
+				if (i==n.getContatti().size()-2) secondToLast=true;
+				if(a.isFixed())
+				{
+					if (a.getPeso() > 0) pesoForte += a.getPeso();
+					else pesoDebole += a.getPeso();
+				}
+				if(!a.isFixed() && !last)
+				{
+					int numero;
+					do
+					{
+						numero = NumeriCasuali.estraiIntero(1, pesoMax) * NumeriCasuali.testaOcroce(/*bonusPos*/);
+					}while(secondToLast && (pesoForte+pesoDebole==numero || pesoForte+pesoDebole==-numero));  //todo bilanciare le sfere
+					a.setPeso(numero);
+					if (a.getPeso() > 0) pesoForte += a.getPeso();
+					else pesoDebole += a.getPeso();
+				}
+				//bonusPos = Math.floor((pesoForte+pesoDebole)*100);
+				if(!a.isFixed() && last)
+				{
+					a.setPeso((-1)*(pesoForte+pesoDebole));
+				}
+				last = false;
+				secondToLast = false;
+				a.setFixed(true);
+				for (Nodo n2: nodi)
+				{
+					if (n2.getId()==n.getId())
+						continue;
+					for (Arco a2: n2.getContatti())
+					{
+						if(a2.archiUguali(a))
+						{
+							a2.setFixed(true);
+							a2.setPeso((-1)*a.getPeso());
+						}
+					}
+				}
+				i++;
+			}
+		}
+	}
+	
+	public static void riordinaNodi()
+	{
+		for (Nodo n: nodi)
+		{
+			for (Arco a: n.getContatti())
+			{
+				if(!(a.getInizio().getId() == n.getId()))
+				{
+					a.invertiInizioFine();
+				}
+			}
+			
 		}
 	}
 }

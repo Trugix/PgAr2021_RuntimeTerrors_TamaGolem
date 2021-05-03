@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Golem
 {
-	public final static int VITA_MAX = 10;
+	public final static int VITA_MAX = 20;
 
 	private String nome;
 	private int vita;

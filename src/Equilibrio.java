@@ -19,7 +19,7 @@ public class Equilibrio
 		return super.equals(obj);
 	}
 	
-	public static void coso(//numero elementi)
+	public static void generaEquilibrio(/*numero elementi*/)
 	{
 		boolean entrato = false, trovato =false;
 		int counter1 = 0, counter2 = 0, counterS = 0;

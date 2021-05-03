@@ -14,6 +14,7 @@ public class Menu {
 	private static String nome1;
 	private static String nome2;
 	private static int scelta;
+	private static Battaglia battle = null;
 
 	//private static Battle = new Battaglia();
 	private static MyMenu menu;
@@ -28,6 +29,8 @@ public class Menu {
 
 		nome1 = InputDati.leggiStringaNonVuota(INSERISCI_NOME1);
 		nome2 = InputDati.leggiStringaNonVuota(INSERISCI_NOME2);
+		
+		battle = new Battaglia(new Giocatore(nome1),new Giocatore(nome2));
 		menu = new MyMenu(INSERISCI_DIFFICOLTA, SCELTE_DIFFICOLTA);
 		scelta = menu.scegli();
 		switch (scelta) {               //selezione difficoltà

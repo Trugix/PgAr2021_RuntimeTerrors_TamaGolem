@@ -70,7 +70,7 @@ public class Arco
 	
 	public void stampaArco()
 	{
-		System.out.println("Arco:  " + "inizio: " + this.inizio.getNome() + " fine: " + this.fine.getNome() + " peso: " + this.peso);
+		System.out.println("Arco:  " + "inizio: " + this.inizio.getId() + " fine: " + this.fine.getId() + " peso: " + this.peso);
 	}
 	
 	/**

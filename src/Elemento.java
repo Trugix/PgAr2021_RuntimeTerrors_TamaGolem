@@ -1,11 +1,9 @@
-import it.unibs.fp.mylib.BelleStringhe;
 
-public class Elemento {
+public class Elemento extends Nodo{
     private String nome;
-    private Nodo nodo;
 
-    public Elemento(Nodo n) {
-        this.nome = BelleStringhe.pickAnElement();
-        this.nodo = n;
+    public Elemento(String nome, int id) {
+        super(id);
+        this.nome = nome;
     }
 }

@@ -1,12 +1,12 @@
 
 public class Battaglia {
-	private static int elements;
-	private static int stones;
-	private static int golems;
-	private static int spareStones;
-	private static int spareStonesforElement;
-	private static Giocatore player1;
-	private static Giocatore player2;
+	private int elements;
+	private int stones;
+	private int golems;
+	private int spareStones;
+	private int spareStonesforElement;
+	private Giocatore player1;
+	private Giocatore player2;
 
 	public  Battaglia(Giocatore p1, Giocatore p2)
 	{
@@ -23,17 +23,17 @@ public class Battaglia {
 	this.spareStonesforElement = (int) Math.ceil(2*(double)(golems*stones)/(double)elements);
 	}
 	
-	public static Giocatore getPlayer1()
+	public  Giocatore getPlayer1()
 	{
 		return player1;
 	}
 	
-	public static Giocatore getPlayer2()
+	public  Giocatore getPlayer2()
 	{
 		return player2;
 	}
 
-	public static boolean cercaGolemNome(String nome)
+	public  boolean cercaGolemNome(String nome)
 	{
 		for (Golem g: player1.getGolemList())
 		{

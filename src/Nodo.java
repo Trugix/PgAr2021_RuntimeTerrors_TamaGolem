@@ -2,30 +2,17 @@ import java.util.ArrayList;
 
 public class Nodo
 {
-	private String nome;
 	private ArrayList<Arco> contatti = new ArrayList<Arco>();   //lista degli archi per ogni nodo
 	private int id;
 	
-	public Nodo(String nome, int id)
+	public Nodo(int id)
 	{
-		this.nome = nome;
 		this.id = id;
 	}
 	
 	public Nodo(Nodo n)
 	{
-		this.nome = n.getNome();
 		this.id = n.getId();
-	}
-	
-	public String getNome()
-	{
-		return nome;
-	}
-	
-	public void setNome(String nome)
-	{
-		this.nome = nome;
 	}
 	
 	public void setContatti(ArrayList<Arco> contatti)
@@ -55,7 +42,7 @@ public class Nodo
 	
 	public void stampaNodo()
 	{
-		System.out.println("Nodo: " + nome);
+		System.out.println("Nodo: " + id);
 		for (Arco c : contatti)
 		{
 			c.stampaArco();

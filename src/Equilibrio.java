@@ -18,7 +18,7 @@ public class Equilibrio
 		int counter1 = 0, counter2 = 0, counterS = 0;
 		for (int i = 0; i < 5; i++)
 		{
-			nodi.add(new Nodo(Integer.toString(i), i));
+			nodi.add(new Nodo(i));
 		}
 		for (Nodo n : nodi) //scorro i nodi
 		{

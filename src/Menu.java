@@ -7,9 +7,10 @@ public class Menu {
 	private static final String INSERISCI_NOME1 = "\nInserisci il nome del primo giocatore:";
 	private static final String INSERISCI_NOME2 = "\nInserisci il nome del secondo giocatore:";
 	private static final String INSERISCI_NUMERO_ELEMENTI = "\nInserisci il numero degli elementi da usare:";
-	private static final String GOLEMS = "GOLEMS";
-	private static final String INSERISCI_DIFFICOLTA = "Inserisci la difficoltà della partita, influenzerà il numero degli elementi";
+	
+	private static final String INSERISCI_DIFFICOLTA = "DIFFICOLTÀ\ninfluenzerà il numero degli elementi";
 	private static final String[] SCELTE_DIFFICOLTA = {"Facile", "Intermedio", "Difficile", "Custom"};
+	private static final String GOLEMS = "GOLEMS";
 	private static final String[] SCELTE_GOLEMS = {"Rent a Golem", "Personalizzati"};
 	private static String nome1;
 	private static String nome2;
@@ -29,7 +30,6 @@ public class Menu {
 
 		nome1 = InputDati.leggiStringaNonVuota(INSERISCI_NOME1);
 		nome2 = InputDati.leggiStringaNonVuota(INSERISCI_NOME2);
-		
 		battle = new Battaglia(new Giocatore(nome1),new Giocatore(nome2));
 		menu = new MyMenu(INSERISCI_DIFFICOLTA, SCELTE_DIFFICOLTA);
 		scelta = menu.scegli();
@@ -50,27 +50,40 @@ public class Menu {
 				elements = InputDati.leggiInteroPositivo(INSERISCI_NUMERO_ELEMENTI);
 				break;
 			default:
-				System.out.println("HOW the fuck are u here");
+				System.out.println("HOW the fuck are u here difficoltà");
 		}
-		stones = ((int) Math.ceil(((double)elements + 1.0) / 3.0) + 1);
-		golems = (int) Math.ceil((double)((elements-1)*(elements-2))/(double)(2*stones));
-		spareStones = (int) Math.ceil(2*(double)(golems*stones)/(double)elements)*elements;
-		spareStonesforElement = (int) Math.ceil(2*(double)(golems*stones)/(double)elements);
-		for (int i=0;i<golems;i++)
+		stones = ((int) Math.ceil(((double)elements + 1.0) / 3.0) + 1);                                  //genera numero pietre per golem
+		golems = (int) Math.ceil((double)((elements-1)*(elements-2))/(double)(2*stones));                //genera numero golem
+		spareStones = (int) Math.ceil(2*(double)(golems*stones)/(double)elements)*elements;              //genera numero pietre comuni
+		spareStonesforElement = (int) Math.ceil(2*(double)(golems*stones)/(double)elements);             //genera numero pietre comuni per elemento
+		
 		menu = new MyMenu(GOLEMS, SCELTE_GOLEMS);
+		
+		scelta = menu.scegli();
 		switch (scelta) {               //selezione nomi golem
 			case 1:
 				for (int i=0; i<golems; i++)
-					BelleStringhe.pickAname();
+				{
+					Battaglia.getPlayer1().addToGolemList(new Golem(BelleStringhe.pickAname()));
+					Battaglia.getPlayer2().addToGolemList(new Golem(BelleStringhe.pickAname()));
+				}
 				break;
-
+				
 			case 2:
 				for (int i=0; i<golems; i++)
-
-					break;
+				{
+					Battaglia.getPlayer1().addToGolemList(new Golem(InputDati.leggiStringaNonVuota("Inserisci il nome del golem " + (i+1) + " del giocatore 1: ")));
+					
+				}
+				for (int i=0; i<golems; i++)
+				{
+					Battaglia.getPlayer2().addToGolemList(new Golem(InputDati.leggiStringaNonVuota("Inserisci il nome del golem " + (i+1) + " del giocatore 2: ")));
+				}
+				break;
 			default:
-				System.out.println("HOW the fuck are u here");
+				System.out.println("HOW the fuck are u here golem");
 		}
+		
 	}
 
 }

@@ -1,12 +1,11 @@
 import it.unibs.fp.mylib.*;
 
-import java.awt.font.NumericShaper;
 import java.util.*;
 
 public class Equilibrio
 {
-	private static final ArrayList<Nodo> nodi = new ArrayList<>();
-	private static ArrayList<Arco> archi = new ArrayList<>();
+	private static final ArrayList<Nodo> nodi = new ArrayList<>();  //lista di tutti i nodi
+	private static ArrayList<Arco> archi = new ArrayList<>();       //lista di tutti gli archi(indipendente da nodi)
 	
 	public static ArrayList<Nodo> getNodi()
 	{
@@ -23,26 +22,26 @@ public class Equilibrio
 		}
 		for (Nodo n : nodi) //scorro i nodi
 		{
-			for (Nodo n2 : nodi) // scorro gli altri nodi
+			for (Nodo n2 : nodi) //scorro gli altri nodi
 			{
-				if (n.equals(n2)) continue;
+				if (n.equals(n2)) continue; //skippa se stesso
 				else
 				{
 					trovato=false;
 					Arco a = new Arco(n, n2,0);
 					for (int j = 0; j < archi.size(); j++)
 					{
-						if(archi.get(j).archiUguali(a))
+						if(archi.get(j).archiUguali(a)) //se trova che a è uguale o opposto ad un arco già creato dopo non lo aggiunge alla lista
 						{
 							trovato = true;
 							break;
 						}
 					}
-					if (!trovato)
+					if (!trovato)   //se non è stato trovato un arco uguale lo aggiunge alla lista degli archi globali e alla lista degli archi del nodo corrente
 					{
 						archi.add(a);
 						n.setArray(new Arco (a));
-						a.getFine().setArray(new Arco (a));
+						a.getFine().setArray(new Arco (a)); //aggiunge anche il suo opposto, ovvero se aggiunge 0,1 aggiunge anche 1,0
 						trovato = false;
 					}
 				}
@@ -85,13 +84,12 @@ public class Equilibrio
 					int numero;
 					do
 					{
-						numero = NumeriCasuali.estraiIntero(1, pesoMax) * NumeriCasuali.testaOcroce(/*bonusPos*/);
+						numero = NumeriCasuali.estraiIntero(1, pesoMax) * NumeriCasuali.testaOcroce();
 					}while(secondToLast && (pesoForte+pesoDebole==numero || pesoForte+pesoDebole==-numero));  //todo bilanciare le sfere
 					a.setPeso(numero);
 					if (a.getPeso() > 0) pesoForte += a.getPeso();
 					else pesoDebole += a.getPeso();
 				}
-				//bonusPos = Math.floor((pesoForte+pesoDebole)*100);
 				if(!a.isFixed() && last)
 				{
 					a.setPeso((-1)*(pesoForte+pesoDebole));
@@ -250,7 +248,6 @@ public class Equilibrio
 					a.invertiInizioFine();
 				}
 			}
-			
 		}
 	}
 	

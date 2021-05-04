@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Nodo
 {
 	private String nome;
-	private ArrayList<Arco> contatti = new ArrayList<Arco>();
+	private ArrayList<Arco> contatti = new ArrayList<Arco>();   //lista degli archi per ogni nodo
 	private int id;
 	
 	public Nodo(String nome, int id)

@@ -2,13 +2,15 @@ public class Arco
 {
 	private Nodo inizio, fine;
 	private int peso;
-	private boolean fixed = false;
+	private boolean fixed = false; //attributo che viene usato nel bilanciamento, quando true l'arco non viene più cambiato
+	
 	public Arco(Nodo inizio, Nodo fine, int peso)
 	{
 		this.inizio = inizio;
 		this.fine = fine;
 		this.peso = peso;
 	}
+	
 	public Arco(Arco a)
 	{
 		this.inizio = a.getInizio();
@@ -26,11 +28,14 @@ public class Arco
 		this.inizio = inizio;
 	}
 	
+	/**
+	 * inverte inizio e fine di un arco
+	 */
 	public void invertiInizioFine()
 	{
-		Arco a= new Arco(this);
-		this.inizio=a.getFine();
-		this.fine= a.getInizio();
+		Arco a = new Arco(this);    //arco temporaneo
+		this.inizio =a.getFine();
+		this.fine = a.getInizio();
 	}
 	
 	public void setFixed(boolean t)
@@ -68,12 +73,11 @@ public class Arco
 		System.out.println("Arco:  " + "inizio: " + this.inizio.getNome() + " fine: " + this.fine.getNome() + " peso: " + this.peso);
 	}
 	
-	@Override
-	public int hashCode()
-	{
-		return super.hashCode();
-	}
-	
+	/**
+	 * due archi sono uguali quando collegano gli stessi nodi
+	 * @param a
+	 * @return
+	 */
 	public boolean archiUguali(Arco a)
 	{
 		if ((this.inizio.equals(a.getInizio())  && this.fine.equals(a.getFine())) || (this.inizio.equals(a.getFine()) && this.fine.equals(a.getInizio())))

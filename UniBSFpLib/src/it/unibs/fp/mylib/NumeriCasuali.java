@@ -29,13 +29,4 @@ public class NumeriCasuali {
 		if (risultato == 0) return -1;
 		else return risultato;
 	}
-	
-	public static int testaOcroce (double probabilitaPos)
-	{
-		double risultato = estraiIntero(0,100);
-		risultato = Math.floor(risultato*(1+probabilitaPos));
-		if (risultato <=49) return -1;
-		else return 1;
-	}
-
 }

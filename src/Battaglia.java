@@ -22,5 +22,14 @@ public class Battaglia {
 	this.spareStones = (int) Math.ceil(2*(double)(golems*stones)/(double)elements)*elements;
 	this.spareStonesforElement = (int) Math.ceil(2*(double)(golems*stones)/(double)elements);
 	}
-
+	
+	public static Giocatore getPlayer1()
+	{
+		return player1;
+	}
+	
+	public static Giocatore getPlayer2()
+	{
+		return player2;
+	}
 }

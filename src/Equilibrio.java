@@ -253,4 +253,15 @@ public class Equilibrio
 			
 		}
 	}
+	
+	public static int numForte(boolean v[])
+	{
+		int conta=0;
+		for(int i=0; i<v.length; i++)
+		{
+			if(v[i] == true)
+				conta++;
+		}
+		return conta;
+	}
 }

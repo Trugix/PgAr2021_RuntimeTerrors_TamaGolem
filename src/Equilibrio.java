@@ -53,7 +53,7 @@ public class Equilibrio
 			a.stampaArco();
 		}
 		riordinaNodi();
-		equilibraNodi();
+		equilibraNodi2();
 		for (Nodo a : nodi)
 		{
 			a.stampaNodo();
@@ -113,6 +113,128 @@ public class Equilibrio
 					}
 				}
 				i++;
+			}
+		}
+	}
+	
+	public static void equilibraNodi2 ()
+	{
+		int [] vettore = new int[nodi.size()-1];
+		for (Nodo n: nodi)
+		{
+			int c=0,somma=0,i;
+			for (Arco a: n.getContatti())
+			{
+				if (a.isFixed())
+				{
+					somma += vettore [c] = a.getPeso();
+					c++;
+				}
+			}
+			if (c==n.getContatti().size()-1) break;
+			for (i=c;i<n.getContatti().size();i++)
+			{
+				somma += vettore [i]= NumeriCasuali.estraiIntero(1, 8) * NumeriCasuali.testaOcroce();;
+			}
+			i=c;
+			do
+			{
+				if (i == n.getContatti().size() - 1) i = c;
+				if (somma>0)
+				{
+						vettore[i]--;
+						somma--;
+				}
+				if (somma<0)
+				{
+						vettore[i]++;
+						somma++;
+				}
+				i++;
+			}
+			while (somma != 0);
+			/*for (i=c;i<n.getContatti().size();i++)
+			{
+				if (n.getContatti().get(i).getPeso()==0)
+				{
+					for (int j=c;j<n.getContatti().size();j++)
+					{
+						if (n.getContatti().get(j).getPeso() > 1 )  //robbbba che come sempre non funziona
+						{
+							n.getContatti().get(i).setPeso(n.getContatti().get(i).getPeso()+1);
+							n.getContatti().get(j).setPeso(n.getContatti().get(j).getPeso()-1);
+						}
+						if (n.getContatti().get(j).getPeso() < -1 )
+						{
+							n.getContatti().get(i).setPeso(n.getContatti().get(i).getPeso()-1);
+							n.getContatti().get(j).setPeso(n.getContatti().get(j).getPeso()+1);
+						}
+					}
+				}
+			}*/
+			
+			for (i=c;i<n.getContatti().size();i++)
+			{
+				n.getContatti().get(i).setPeso(vettore[i]);
+				n.getContatti().get(i).setFixed(true);
+			}
+			
+			for (Arco a: n.getContatti())
+			{
+				for (Nodo n2 : nodi)
+				{
+					if (n2.getId() == n.getId())
+						continue;
+					for (Arco a2 : n2.getContatti())
+					{
+						if (a2.archiUguali(a))
+						{
+							a2.setFixed(true);
+							a2.setPeso((-1) * a.getPeso());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public static void equilibraNodi3 ()
+	{
+		boolean [] vettore = new boolean[nodi.size()-1];
+		int forte, debole, numF, numD;
+		for (Nodo n: nodi)
+		{
+			forte = NumeriCasuali.estraiIntero(0,nodi.size()-1);
+			vettore[forte] = true;
+			do
+			{
+				debole = NumeriCasuali.estraiIntero(0,nodi.size()-1);
+				vettore[debole] = false;
+			}while(debole == forte);
+			n.getContatti().get(forte).setFixed(true);
+			n.getContatti().get(debole).setFixed(true);
+			for (int i=0; i<n.getContatti().size(); i++)
+			{
+				if(!n.getContatti().get(i).isFixed())
+				{
+					if(NumeriCasuali.testaOcroce()>0)
+					{
+						vettore[i] = true;
+					}
+					else
+					{
+						vettore[i] = false;
+					}
+				}
+				numF = numForte(vettore);
+				numD = n.getContatti().size()-numF;
+				for(int conta=1; conta<n.getContatti().size(); conta++)
+				{
+					if(conta == numF)
+					{
+						n.getContatti().get(forte).setPeso(NumeriCasuali.estraiIntero(n.getContatti().size()-conta, 10));
+					}
+				}
 			}
 		}
 	}

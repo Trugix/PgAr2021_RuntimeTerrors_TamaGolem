@@ -199,7 +199,7 @@ public class Equilibrio
 	public static void equilibraNodi3 ()
 	{
 		boolean [] vettore = new boolean[nodi.size()-1];
-		int forte, debole, numF, numD;
+		int forte, debole, numF, numD, contaF=1, contaD=1;
 		for (Nodo n: nodi)
 		{
 			forte = NumeriCasuali.estraiIntero(0,nodi.size()-1);
@@ -228,11 +228,36 @@ public class Equilibrio
 				numD = n.getContatti().size()-numF;
 				for(int conta=1; conta<n.getContatti().size(); conta++)
 				{
-					if(conta == numF)
+					if(numF < numD)
 					{
-						n.getContatti().get(forte).setPeso(NumeriCasuali.estraiIntero(n.getContatti().size()-conta, 10));
+						if(numF == conta)
+						{
+							n.getContatti().get(forte).setPeso(NumeriCasuali.estraiIntero((int)Math.ceil((double)(n.getContatti().size()-conta)/(double)numF), 10));
+						}
+						if(!(n.getContatti().get(i).isFixed()) && contaF < numF && vettore[i] == true)
+						{
+							contaF++;
+							n.getContatti().get(i).setPeso(NumeriCasuali.estraiIntero((int)Math.ceil((double)(n.getContatti().size()-conta)/(double)numF), 10));
+						}
+						else
+						{
+							if(!(n.getContatti().get(i).isFixed()) && contaD < numD && vettore[i] == false)
+							{
+								contaD++;
+								n.getContatti().get(i).setPeso(NumeriCasuali.estraiIntero(1	, 10));
+							}
+						}
+
+					}
+					if(numD < numF)
+					{
+						if(numD == conta)
+						{
+							n.getContatti().get(debole).setPeso(NumeriCasuali.estraiIntero(n.getContatti().size()-conta, 10));
+						}
 					}
 				}
+
 			}
 		}
 	}

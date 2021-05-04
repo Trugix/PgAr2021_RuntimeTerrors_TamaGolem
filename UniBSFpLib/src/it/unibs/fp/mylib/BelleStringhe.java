@@ -7,13 +7,18 @@ public class BelleStringhe
  private final static String SPAZIO = " ";
  private final static String CORNICE = "---------------------------------------------------";
  private final static String ACAPO = "\n";
- private static final List<String> coolNames = Arrays.asList("Giorgio", "Golemmo", "Gormita", "Giangiotto", "Argillo", "Argillino", "Sparkly", "Margot", "Hottie", "Shocky");
+ private static final List<String> coolNames = Arrays.asList("Giorgio", "Golemmo", "Gormita", "Giangiotto", "Argillo", "Argillino", "Sparkly", "Margot", "Hottie", "Shocky", "Rick Astley");
+ private static final List<String> Elements = Arrays.asList("Aria", "Acqua", "Terra", "Tuono", "Fuoco", "Etere", "Oscurità", "Morte", "Lotta", "Erba", "Luce", "Ghiaccio", "Psichico", "Spirito", "Legno", "Gravità", "Benedetto", "Maledetto", "Cristallo");
 
-public static String pickAname()
-{
-	coolNames.get(NumeriCasuali.estraiIntero(0, coolNames.size()));
-	return coolNames.get(NumeriCasuali.estraiIntero(0, coolNames.size()));
-}
+	public static String pickAname()
+	{
+		return coolNames.get(NumeriCasuali.estraiIntero(0, coolNames.size()-1));
+	}
+
+	public static String pickAnElement()
+	{
+			return coolNames.get(NumeriCasuali.estraiIntero(0, Elements.size()-1));
+	}
 
  public static String incornicia (String s)
 	{ 

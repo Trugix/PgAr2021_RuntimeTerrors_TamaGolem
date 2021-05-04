@@ -32,4 +32,17 @@ public class Battaglia {
 	{
 		return player2;
 	}
+
+	public static boolean cercaGolemNome(String nome)
+	{
+		for (Golem g: player1.getGolemList())
+		{
+				if (g.getNome().equals(nome))	return true;
+		}
+		for (Golem g: player2.getGolemList())
+		{
+			if (g.getNome().equals(nome))	return true;
+		}
+		return false;
+	}
 }

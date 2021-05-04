@@ -26,11 +26,13 @@ public class Menu {
 	private static int spareStones;
 	private static int spareStonesforElement;
 
-	public static void schifo() {
-
+	public static void ilMenu() {		//todo trasferire le varie sezioni in metodi a parte
+		//sezione giocatori
 		nome1 = InputDati.leggiStringaNonVuota(INSERISCI_NOME1);
 		nome2 = InputDati.leggiStringaNonVuota(INSERISCI_NOME2);
 		battle = new Battaglia(new Giocatore(nome1),new Giocatore(nome2));
+
+		//sezione difficoltà
 		menu = new MyMenu(INSERISCI_DIFFICOLTA, SCELTE_DIFFICOLTA);
 		scelta = menu.scegli();
 		switch (scelta) {               //selezione difficoltà
@@ -56,34 +58,51 @@ public class Menu {
 		golems = (int) Math.ceil((double)((elements-1)*(elements-2))/(double)(2*stones));                //genera numero golem
 		spareStones = (int) Math.ceil(2*(double)(golems*stones)/(double)elements)*elements;              //genera numero pietre comuni
 		spareStonesforElement = (int) Math.ceil(2*(double)(golems*stones)/(double)elements);             //genera numero pietre comuni per elemento
-		
+
+		//sezione golem
 		menu = new MyMenu(GOLEMS, SCELTE_GOLEMS);
-		
 		scelta = menu.scegli();
+		String nome;
 		switch (scelta) {               //selezione nomi golem
-			case 1:
+			case 1:		//nomi scelti dal programma
 				for (int i=0; i<golems; i++)
 				{
-					Battaglia.getPlayer1().addToGolemList(new Golem(BelleStringhe.pickAname()));
-					Battaglia.getPlayer2().addToGolemList(new Golem(BelleStringhe.pickAname()));
+
+					do {
+						nome = BelleStringhe.pickAname();
+					}while (!Battaglia.cercaGolemNome(nome));
+					Battaglia.getPlayer1().addToGolemList(new Golem(nome));
+					do {
+						nome = BelleStringhe.pickAname();
+					}while (!Battaglia.cercaGolemNome(nome));
+					Battaglia.getPlayer2().addToGolemList(new Golem(nome));
 				}
 				break;
 				
-			case 2:
+			case 2:		//nomi scelti dall'utente
 				for (int i=0; i<golems; i++)
 				{
-					Battaglia.getPlayer1().addToGolemList(new Golem(InputDati.leggiStringaNonVuota("Inserisci il nome del golem " + (i+1) + " del giocatore 1: ")));
-					
+					do {
+						nome = InputDati.leggiStringaNonVuota("Inserisci il nome (univoco) del golem " + (i + 1) + " del giocatore 1: ");
+					}while (Battaglia.cercaGolemNome(nome));
+					Battaglia.getPlayer1().addToGolemList(new Golem(nome));
 				}
 				for (int i=0; i<golems; i++)
 				{
-					Battaglia.getPlayer2().addToGolemList(new Golem(InputDati.leggiStringaNonVuota("Inserisci il nome del golem " + (i+1) + " del giocatore 2: ")));
+					do {
+						nome = InputDati.leggiStringaNonVuota("Inserisci il nome (univoco) del golem " + (i + 1) + " del giocatore 2: ");
+					}while (Battaglia.cercaGolemNome(nome));
+					Battaglia.getPlayer2().addToGolemList(new Golem(nome));
 				}
 				break;
+
 			default:
 				System.out.println("HOW the fuck are u here golem");
 		}
-		
+
+		//sezione pietre golem giocatore 1
+		//menu = new MyMenu(/*STONES, SCELTE_STONES*/);
+		scelta = menu.scegli();
 	}
 
 }

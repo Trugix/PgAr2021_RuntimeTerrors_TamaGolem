@@ -14,4 +14,8 @@ public class Giocatore
 	{
 		golemList.add(g);
 	}
+
+	public ArrayList<Golem> getGolemList() {
+		return golemList;
+	}
 }

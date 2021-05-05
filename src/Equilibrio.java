@@ -14,7 +14,7 @@ public class Equilibrio
 	 */
 	public static void generaEquilibrio(int nElements)
 	{
-		boolean entrato = false, trovato = false;
+		boolean trovato;
 		for (int i = 0; i < nElements; i++)
 		{
 			elementi.add(new Elemento(i));
@@ -23,8 +23,7 @@ public class Equilibrio
 		{
 			for (Nodo n2 : elementi) //scorro gli altri nodi
 			{
-				if (n.equals(n2)) continue; //skippa se stesso
-				else
+				if (!n.equals(n2))//Entra solo se non è se stesso
 				{
 					trovato = false;
 					Arco a = new Arco(n, n2, 0);
@@ -41,7 +40,6 @@ public class Equilibrio
 						archi.add(a);
 						n.setArray(new Arco(a));
 						a.getFine().setArray(new Arco(a)); //aggiunge anche il suo opposto, ovvero se aggiunge 0,1 aggiunge anche 1,0
-						trovato = false;
 					}
 				}
 			}
@@ -58,7 +56,7 @@ public class Equilibrio
 		}
 	}
 	
-	public static void equilibraNodi()
+	/*public static void equilibraNodi()
 	{
 		int pesoMax = 8, pesoForte = 0, pesoDebole = 0;
 		double bonusPos = 0;
@@ -113,7 +111,7 @@ public class Equilibrio
 				i++;
 			}
 		}
-	}
+	}*/
 	
 	/**
 	 * Genera i danni che ogni nodo fa o riceve, controllando che non sia 0 od un numero troppo alto
@@ -133,12 +131,12 @@ public class Equilibrio
 			}
 			zero=1;
 			max=0;
-			for (Nodo n : nodi)
+			for (Elemento n : elementi) //scorro gli elementi
 			{
 				int somma = 0, c = 0, i;
 				for (i = 0; i < n.getContatti().size(); i++) vettore[i] = 0; //inizializzo il vettore
 				
-				for (Arco a : n.getContatti())
+				for (Arco a : n.getContatti())  //scorro i collegamenti dell'elemento
 				{
 					if (a.isFixed()) //controllo quali numeri vanno modificati e quali no
 					{
@@ -146,15 +144,13 @@ public class Equilibrio
 						c++; //punto di partenza da dove posso iniziare a modificare i numeri
 					}
 				}
-				if (c == n.getContatti().size()) break;
-				for (i = c; i < n.getContatti().size(); i++)
+				for (i = c; i < n.getContatti().size(); i++) //scorro i numeri che posso modificare
 				{
-					somma += vettore[i] = NumeriCasuali.estraiIntero(-10, 10) * NumeriCasuali.testaOcroce();
+					somma += vettore[i] = NumeriCasuali.estraiIntero(-10, 10); //genera casualmente i valori del vettore
 				}
 				i = c;
 				do
-				{
-					
+				{           // cerco di avere la somma dei numeri = 0 impedendo che un numero sia troppo alto o troppo basso
 					if (i == n.getContatti().size()) i = c;
 					if (somma > 0) //se la somma è troppo alta abbasso qualche numero
 					{
@@ -168,8 +164,9 @@ public class Equilibrio
 					}
 					i++;
 				}
-				while (somma != 0);
-				if (c == n.getContatti().size()) break;
+				while (somma != 0); //finché non è equilibrato ripete il procedimento
+				
+				//todo fare metodo
 				for (int j = c; j < n.getContatti().size(); j++)
 				{
 					if (vettore[j] == 0)
@@ -202,7 +199,7 @@ public class Equilibrio
 				//todo fare metodo
 				for (Arco a : n.getContatti())
 				{
-					for (Nodo n2 : nodi)
+					for (Elemento n2 : elementi)
 					{
 						if (n2.getId() == n.getId())
 							continue;
@@ -218,7 +215,7 @@ public class Equilibrio
 				}
 			}
 		
-			for (Nodo n: nodi)
+			for (Elemento n : elementi)
 			{
 				for (Arco a:n.getContatti())
 				{
@@ -298,9 +295,13 @@ public class Equilibrio
 		}
 	}*/
 	
+	/**
+	 * preso un nodo ordino il suo vettore di archi in modo che gli archi partano tutti da esso e terminino in altri nodi.
+	 * questo si verifica per
+	 */
 	public static void riordinaNodi()
 	{
-		for (Nodo n : nodi)
+		for (Elemento n : elementi)
 		{
 			for (Arco a : n.getContatti())
 			{

@@ -4,13 +4,9 @@ import java.util.*;
 
 public class Equilibrio
 {
-	private static final ArrayList<Nodo> nodi = new ArrayList<>();  //lista di tutti i nodi
+	private static final ArrayList<Elemento> elementi = new ArrayList<>();  //lista di tutti i nodi
 	private static ArrayList<Arco> archi = new ArrayList<>();       //lista di tutti gli archi(indipendente da nodi)
 	
-	public static ArrayList<Nodo> getNodi()
-	{
-		return nodi;
-	}
 	
 	/**
 	 * genera tutti i nodi, e tutti gli associamenti, poi associa a ogni nodo i suoi collegamenti con gli altri nodi
@@ -21,20 +17,20 @@ public class Equilibrio
 		boolean entrato = false, trovato = false;
 		for (int i = 0; i < nElements; i++)
 		{
-			nodi.add(new Nodo(i));
+			elementi.add(new Elemento(i));
 		}
-		for (Nodo n : nodi) //scorro i nodi
+		for (Nodo n : elementi) //scorro i nodi
 		{
-			for (Nodo n2 : nodi) //scorro gli altri nodi
+			for (Nodo n2 : elementi) //scorro gli altri nodi
 			{
 				if (n.equals(n2)) continue; //skippa se stesso
 				else
 				{
 					trovato = false;
 					Arco a = new Arco(n, n2, 0);
-					for (int j = 0; j < archi.size(); j++)
+					for (Arco arco : archi)
 					{
-						if (archi.get(j).archiUguali(a)) //se trova che a è uguale o opposto ad un arco già creato dopo non lo aggiunge alla lista
+						if (arco.archiUguali(a)) //se trova che a è uguale o opposto ad un arco già creato dopo non lo aggiunge alla lista
 						{
 							trovato = true;
 							break;
@@ -56,7 +52,7 @@ public class Equilibrio
 		}
 		riordinaNodi();
 		equilibraNodi2();
-		for (Nodo a : nodi)
+		for (Elemento a : elementi)
 		{
 			a.stampaNodo();
 		}
@@ -67,7 +63,7 @@ public class Equilibrio
 		int pesoMax = 8, pesoForte = 0, pesoDebole = 0;
 		double bonusPos = 0;
 		boolean last = false, secondToLast = false;
-		for (Nodo n : nodi)
+		for (Elemento n : elementi)
 		{
 			int i = 0;
 			pesoForte = 0;
@@ -101,7 +97,7 @@ public class Equilibrio
 				last = false;
 				secondToLast = false;
 				a.setFixed(true);
-				for (Nodo n2 : nodi)
+				for (Elemento n2 : elementi)
 				{
 					if (n2.getId() == n.getId())
 						continue;
@@ -124,11 +120,11 @@ public class Equilibrio
 	 */
 	public static void equilibraNodi2()
 	{
-		int[] vettore = new int[nodi.size() - 1];
+		int[] vettore = new int[elementi.size() - 1];
 		int zero,max;
 		do
 		{
-			for (Nodo n: nodi)
+			for (Elemento n: elementi)          // nel caso si debba rigenerare l'equilibrio, rende gloi archi modificabili di nuovo
 			{
 				for (Arco a:n.getContatti())
 				{
@@ -139,15 +135,15 @@ public class Equilibrio
 			max=0;
 			for (Nodo n : nodi)
 			{
-				int somma = 0, c = 0, i = 0;
-				for (i = 0; i < n.getContatti().size(); i++) vettore[i] = 0;
+				int somma = 0, c = 0, i;
+				for (i = 0; i < n.getContatti().size(); i++) vettore[i] = 0; //inizializzo il vettore
 				
 				for (Arco a : n.getContatti())
 				{
-					if (a.isFixed())
+					if (a.isFixed()) //controllo quali numeri vanno modificati e quali no
 					{
-						somma += vettore[c] = a.getPeso();
-						c++;
+						somma += vettore[c] = a.getPeso(); //sommo i numeri che non posso modificare
+						c++; //punto di partenza da dove posso iniziare a modificare i numeri
 					}
 				}
 				if (c == n.getContatti().size()) break;
@@ -160,12 +156,12 @@ public class Equilibrio
 				{
 					
 					if (i == n.getContatti().size()) i = c;
-					if (somma > 0)
+					if (somma > 0) //se la somma è troppo alta abbasso qualche numero
 					{
 						vettore[i]--;
 						somma--;
 					}
-					if (somma < 0)
+					if (somma < 0) //se la somma è troppo bassa alzo qualche numero
 					{
 						vettore[i]++;
 						somma++;
@@ -189,7 +185,10 @@ public class Equilibrio
 						}
 					}
 				}
+				
 				i = 0;
+				
+				//todo fare metodo
 				for (Arco a : n.getContatti())
 				{
 					if (!a.isFixed())
@@ -199,6 +198,8 @@ public class Equilibrio
 					}
 					i++;
 				}
+				
+				//todo fare metodo
 				for (Arco a : n.getContatti())
 				{
 					for (Nodo n2 : nodi)
@@ -221,15 +222,16 @@ public class Equilibrio
 			{
 				for (Arco a:n.getContatti())
 				{
-					if ((a.getPeso()==0)) zero =0;
+					if ((a.getPeso()==0)) zero =0;   //controllo che non ci siano interazioni che fanno danno 0 o che bi-shottino l'avversario.
 					if(a.getPeso()>max) max=a.getPeso();
 				}
 			}
 		}
-		while (zero==0 || max>=15);
-	}
+		while (zero==0 || max>=15); //nel caso estremo in cui tutto il resto non sia riuscito a bilanciare il gioco l'equilibrio viene rigenerato.
+	}                               // è una cosa relativamente rara che non rallenta (non troppo) il codice e non dovrebbe verificarsi troppo spesso
+									//leggi panick button
 	
-	public static void equilibraNodi3()
+	/*public static void equilibraNodi3()
 	{
 		boolean[] vettore = new boolean[nodi.size() - 1];
 		int forte, debole, numF, numD, contaF = 1, contaD = 1;
@@ -294,7 +296,7 @@ public class Equilibrio
 				
 			}
 		}
-	}
+	}*/
 	
 	public static void riordinaNodi()
 	{
@@ -310,12 +312,12 @@ public class Equilibrio
 		}
 	}
 	
-	public static int numForte(boolean v[])
+	public static int numForte(boolean[] v)
 	{
 		int conta = 0;
-		for (int i = 0; i < v.length; i++)
+		for (boolean b : v)
 		{
-			if (v[i] == true)
+			if (b)
 				conta++;
 		}
 		return conta;

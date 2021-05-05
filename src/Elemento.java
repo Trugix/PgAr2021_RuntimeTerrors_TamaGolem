@@ -1,8 +1,8 @@
 public class Elemento extends Nodo{
     private String nome;
 
-    public Elemento(String nome, int id) {
+    public Elemento(int id) {
         super(id);
-        this.nome = nome;
+        this.nome=null;
     }
 }

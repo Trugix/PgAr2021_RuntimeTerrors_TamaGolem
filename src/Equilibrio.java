@@ -12,7 +12,11 @@ public class Equilibrio
 		return nodi;
 	}
 	
-	public static void generaEquilibrio(/*numero elementi*/)
+	/**
+	 * genera tutti i nodi, e tutti gli associamenti, poi associa a ogni nodo i suoi collegamenti con gli altri nodi
+	 * @param nElements il numero di nodi da generare
+	 */
+	public static void generaEquilibrio(int nElements)
 	{
 		boolean entrato = false, trovato = false;
 		for (int i = 0; i < nElements; i++)

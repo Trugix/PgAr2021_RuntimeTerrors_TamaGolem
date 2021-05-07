@@ -17,7 +17,8 @@ public class Equilibrio
 		boolean trovato;
 		for (int i = 0; i < nElements; i++)
 		{
-			elementi.add(new Elemento(i));
+			Elemento e = new Elemento(i, BelleStringhe.pickAnElement());
+			elementi.add(e);
 		}
 		for (Nodo n : elementi) //scorro i nodi
 		{
@@ -280,7 +281,6 @@ public class Equilibrio
 								e.getContatti().get(i).setPeso(NumeriCasuali.estraiIntero((int) Math.ceil((double) (e.getContatti().size() - conta) / (double) numF), 10));
 							}
 						}
-						
 					}
 					if (numD < numF)
 					{
@@ -297,7 +297,6 @@ public class Equilibrio
 	
 	/**
 	 * preso un nodo ordino il suo vettore di archi in modo che gli archi partano tutti da esso e terminino in altri nodi.
-	 * questo si verifica per
 	 */
 	public static void riordinaNodi()
 	{

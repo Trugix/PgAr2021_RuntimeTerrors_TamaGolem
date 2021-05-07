@@ -1,3 +1,6 @@
+import it.unibs.fp.mylib.InputDati;
+import it.unibs.fp.mylib.NumeriCasuali;
+
 import java.util.ArrayList;
 
 public class Battaglia
@@ -9,7 +12,7 @@ public class Battaglia
 	private int nSpareStonesforElement;
 	private Giocatore player1;
 	private Giocatore player2;
-
+	
 	public  Battaglia(Giocatore p1, Giocatore p2)
 	{
 		this.player1 = p1;
@@ -96,4 +99,66 @@ public class Battaglia
 		pietre.set(pietre.size()-1, temp);
 		return pietre;
 	}
+	
+	public void start()
+	{
+		System.out.println("Numero di elementi: " + nElements + "\nNumero di pietre totali: " + nSpareStones + "\nNumero di pietre per ogni elemento: " + nSpareStonesforElement+ "\nNumero di golem per giocatore: " + nGolems+ "\nNumero di pietre per golem: " + nStonesInGolem);
+		if(NumeriCasuali.testaOcroce()==1)
+		{
+			System.out.println("Il giocatore " + player1.getName() + " evoca per primo");
+			evocazione(player1);
+			evocazione(player2);
+		}
+		else
+		{
+			System.out.println("Il giocatore " + player2.getName() + " evoca per primo");
+			evocazione(player2);
+			evocazione(player1);
+		}
+		
+		
+	}
+	
+	public void evocazione(Giocatore g)
+	{
+		System.out.println("Evocazione del giocatore: "+g.getName());
+		System.out.print("Golem disponibili: ");
+		for (Golem golem: g.getGolemList())
+		{
+			System.out.print(golem.getNome() +", ");
+		}
+		System.out.println("");
+		boolean pronto = false;
+		String scelta;
+		do
+		{
+			scelta = InputDati.leggiStringaNonVuota("Inserire il nome del golem da evocare: ");
+			for (Golem golem: g.getGolemList())
+			{
+				if (golem.getNome().equals(scelta))
+				{
+					pronto=true;
+					g.setGolemInCampo(golem);
+				}
+			}
+			if(!pronto) System.out.println("Questo golem non è presente nella lista di questo giocatore");
+		}
+		while (!pronto);
+		inserisciPietre(g.getGolemInCampo());
+	}
+	
+	public void inserisciPietre(Golem g)
+	{
+		System.out.println("Inserimento pietre del golem: " + g.getNome());
+		for (int i = 0; i<this.nStonesInGolem; i++)
+		{
+		
+		}
+	}
+	
+	/* Elemento         qunatità disponibile
+		aria                    3
+		acqua                   4
+		ecc.
+	 */
 }

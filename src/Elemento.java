@@ -1,8 +1,13 @@
 public class Elemento extends Nodo{
     private String nome;
 
-    public Elemento(int id) {
+    public Elemento(int id, String nome)
+    {
         super(id);
-        this.nome=null;
+        this.nome = nome;
+    }
+    public void setNome(String nome)
+    {
+        this.nome = nome;
     }
 }

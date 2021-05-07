@@ -34,4 +34,14 @@ public class Giocatore
 	public ArrayList<Golem> getGolemList() {
 		return golemList;
 	}
+	
+	public void setGolemInCampo(Golem golemInCampo)
+	{
+		this.golemInCampo = golemInCampo;
+	}
+	
+	public Golem getGolemInCampo()
+	{
+		return golemInCampo;
+	}
 }

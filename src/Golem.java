@@ -6,13 +6,13 @@ public class Golem
 
 	private String nome;
 	private int vita;
-	//private ArrayList<Elementi> stones = new ArrayList<>();
-	private int selectedStone = 0; // indice della pietra selezionata
+	private boolean isMorto = false;
+	private ArrayList<Elemento> stones = new ArrayList<>();
+	//private int selectedStone = 0; // indice della pietra selezionata
 
-	public Golem(String nome /*,arraylist stones*/) {
+	public Golem(String nome) {
 		this.nome = nome;
 		this.vita = VITA_MAX;
-		//this.stones=stones;
 	}
 	
 	public boolean isMorto()

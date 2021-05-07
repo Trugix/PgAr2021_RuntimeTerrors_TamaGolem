@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Battaglia {
 	private int elements;
@@ -44,5 +45,23 @@ public class Battaglia {
 			if (g.getNome().equals(nome))	return true;
 		}
 		return false;
+	}
+
+	public void attacco(ArrayList<Elemento> pietreA, ArrayList<Elemento> pietreB)
+	{
+
+	}
+
+
+	public ArrayList<Elemento> sceltaPietre(ArrayList<Elemento> pietre)
+	{
+		Elemento temp;
+		temp = pietre.get(0);
+		for (int i=0; i<pietre.size(); i++)
+		{
+			pietre.set(i, pietre.get(i+1));
+		}
+		pietre.set(pietre.size()-1, temp);
+		return pietre;
 	}
 }

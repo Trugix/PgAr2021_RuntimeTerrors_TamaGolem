@@ -228,25 +228,25 @@ public class Equilibrio
 	}                               // è una cosa relativamente rara che non rallenta (non troppo) il codice e non dovrebbe verificarsi troppo spesso
 									//leggi panick button
 	
-	/*public static void equilibraNodi3()
+	public static void equilibraNodi3()
 	{
-		boolean[] vettore = new boolean[nodi.size() - 1];
+		boolean[] vettore = new boolean[elementi.size() - 1];
 		int forte, debole, numF, numD, contaF = 1, contaD = 1;
-		for (Nodo n : nodi)
+		for (Elemento e : elementi)
 		{
-			forte = NumeriCasuali.estraiIntero(0, nodi.size() - 1);
+			forte = NumeriCasuali.estraiIntero(0, elementi.size() - 1);
 			vettore[forte] = true;
 			do
 			{
-				debole = NumeriCasuali.estraiIntero(0, nodi.size() - 1);
+				debole = NumeriCasuali.estraiIntero(0, elementi.size() - 1);
 				vettore[debole] = false;
 			}
 			while (debole == forte);
-			n.getContatti().get(forte).setFixed(true);
-			n.getContatti().get(debole).setFixed(true);
-			for (int i = 0; i < n.getContatti().size(); i++)
+			e.getContatti().get(forte).setFixed(true);
+			e.getContatti().get(debole).setFixed(true);
+			for (int i = 0; i < e.getContatti().size(); i++)
 			{
-				if (!n.getContatti().get(i).isFixed())
+				if (!e.getContatti().get(i).isFixed())
 				{
 					if (NumeriCasuali.testaOcroce() > 0)
 					{
@@ -258,26 +258,26 @@ public class Equilibrio
 					}
 				}
 				numF = numForte(vettore);
-				numD = n.getContatti().size() - numF;
-				for (int conta = 1; conta < n.getContatti().size(); conta++)
+				numD = e.getContatti().size() - numF;
+				for (int conta = 1; conta < e.getContatti().size(); conta++)
 				{
 					if (numF < numD)
 					{
 						if (numF == conta)
 						{
-							n.getContatti().get(forte).setPeso(NumeriCasuali.estraiIntero((int) Math.ceil((double) (n.getContatti().size() - conta) / (double) numF), 10));
+							e.getContatti().get(forte).setPeso(NumeriCasuali.estraiIntero((int) Math.ceil((double) (e.getContatti().size() - conta) / (double) numF), 10));
 						}
-						if (!(n.getContatti().get(i).isFixed()) && contaF < numF && vettore[i] == true)
+						if (!(e.getContatti().get(i).isFixed()) && contaF < numF && vettore[i] == true)
 						{
 							contaF++;
-							n.getContatti().get(i).setPeso(NumeriCasuali.estraiIntero((int) Math.ceil((double) (n.getContatti().size() - conta) / (double) numF), 10));
+							e.getContatti().get(i).setPeso(NumeriCasuali.estraiIntero((int) Math.ceil((double) (e.getContatti().size() - conta) / (double) numF), 10));
 						}
 						else
 						{
-							if (!(n.getContatti().get(i).isFixed()) && contaD < numD && vettore[i] == false)
+							if (!(e.getContatti().get(i).isFixed()) && contaD < numD && vettore[i] == false)
 							{
 								contaD++;
-								n.getContatti().get(i).setPeso(NumeriCasuali.estraiIntero(1, 10));
+								e.getContatti().get(i).setPeso(NumeriCasuali.estraiIntero((int) Math.ceil((double) (e.getContatti().size() - conta) / (double) numF), 10));
 							}
 						}
 						
@@ -286,14 +286,14 @@ public class Equilibrio
 					{
 						if (numD == conta)
 						{
-							n.getContatti().get(debole).setPeso(NumeriCasuali.estraiIntero(n.getContatti().size() - conta, 10));
+							e.getContatti().get(debole).setPeso(NumeriCasuali.estraiIntero(e.getContatti().size() - conta, 10));
 						}
 					}
 				}
 				
 			}
 		}
-	}*/
+	}
 	
 	/**
 	 * preso un nodo ordino il suo vettore di archi in modo che gli archi partano tutti da esso e terminino in altri nodi.

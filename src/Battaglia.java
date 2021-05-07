@@ -50,11 +50,42 @@ public class Battaglia
 	
 	public void attacco(Elemento pietreA, Elemento pietreB)
 	{
-
+		for (int i=0; i< pietreA.getContatti().size();i++)
+		{
+			if (pietreA.getContatti().get(i).getFine().getId() == pietreB.getId())
+			{
+				if (pietreA.getContatti().get(i).getPeso() > 0)
+				{
+					player2.getGolemInCampo().setVita(player2.getGolemInCampo().getVita() - pietreA.getContatti().get(i).getPeso());
+					System.out.println("Il golem " + player2.getGolemInCampo().getNome() + " subisce " + pietreA.getContatti().get(i).getPeso());
+					if(player2.getGolemInCampo().getVita()>0)
+						System.out.println("Vita rimanente del golem " + player2.getGolemInCampo().getNome() + ": " + player2.getGolemInCampo().getVita());
+					else
+					{
+						System.out.println("Il golem: " + player2.getGolemInCampo().getNome() + " is no more");
+						player2.getGolemInCampo().setIsMorto(true);
+					}
+				}
+				else
+				{
+					player1.getGolemInCampo().setVita(player1.getGolemInCampo().getVita() - pietreB.getContatti().get(i).getPeso());
+					System.out.println("Il golem " + player1.getGolemInCampo().getNome() + " subisce " + pietreB.getContatti().get(i).getPeso());
+					System.out.println("Vita rimanente del golem " + player1.getGolemInCampo().getNome() + ": " + player1.getGolemInCampo().getVita());
+					if(player1.getGolemInCampo().getVita()>0)
+						System.out.println("Vita rimanente del golem " + player1.getGolemInCampo().getNome() + ": " + player1.getGolemInCampo().getVita());
+					else
+					{
+						System.out.println("Il golem: " + player1.getGolemInCampo().getNome() + " is no more");
+						player1.getGolemInCampo().setIsMorto(true);
+					}
+				}
+				break;
+			}
+		}
 	}
-
-
-	public ArrayList<Elemento> sceltaPietre(ArrayList<Elemento> pietre)
+	
+	
+	public ArrayList<Elemento> giraPietre(ArrayList<Elemento> pietre)
 	{
 		Elemento temp;
 		temp = pietre.get(0);

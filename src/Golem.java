@@ -14,10 +14,15 @@ public class Golem
 		this.vita = VITA_MAX;
 		//this.stones=stones;
 	}
-
-	public Golem(/*,arraylist stones*/) {
-		this.vita = VITA_MAX;
-		//this.stones=stones;
+	
+	public boolean isMorto()
+	{
+		return isMorto;
+	}
+	
+	public void setIsMorto(boolean isMorto)
+	{
+		this.isMorto = isMorto;
 	}
 
 	public String getNome() {

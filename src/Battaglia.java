@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 
-public class Battaglia {
-	private int elements;
-	private int stones;
-	private int golems;
-	private int spareStones;
-	private int spareStonesforElement;
+public class Battaglia
+{
+	private int nElements;
+	private int nStonesInGolem;
+	private int nGolems;
+	private int nSpareStones;
+	private int nSpareStonesforElement;
 	private Giocatore player1;
 	private Giocatore player2;
 
@@ -15,13 +16,13 @@ public class Battaglia {
 		this.player2 = p2;
 	}
 	public Battaglia(Giocatore p1, Giocatore p2, int elements){
-	this.elements=elements;
+	this.nElements =elements;
 	this.player1=p1;
 	this.player2=p2;
-	this.stones = ((int) Math.ceil(((double)elements + 1.0) / 3.0) + 1);
-	this.golems = (int) Math.ceil((double)((elements-1)*(elements-2))/(double)(2*stones));
-	this.spareStones = (int) Math.ceil(2*(double)(golems*stones)/(double)elements)*elements;
-	this.spareStonesforElement = (int) Math.ceil(2*(double)(golems*stones)/(double)elements);
+	this.nStonesInGolem = ((int) Math.ceil(((double)elements + 1.0) / 3.0) + 1);
+	this.nGolems = (int) Math.ceil((double)((elements-1)*(elements-2))/(double)(2* nStonesInGolem));
+	this.nSpareStones = (int) Math.ceil(2*(double)(nGolems * nStonesInGolem)/(double)elements)*elements;
+	this.nSpareStonesforElement = (int) Math.ceil(2*(double)(nGolems * nStonesInGolem)/(double)elements);
 	}
 	
 	public  Giocatore getPlayer1()
@@ -46,8 +47,8 @@ public class Battaglia {
 		}
 		return false;
 	}
-
-	public void attacco(ArrayList<Elemento> pietreA, ArrayList<Elemento> pietreB)
+	
+	public void attacco(Elemento pietreA, Elemento pietreB)
 	{
 
 	}
@@ -57,7 +58,7 @@ public class Battaglia {
 	{
 		Elemento temp;
 		temp = pietre.get(0);
-		for (int i=0; i<pietre.size(); i++)
+		for (int i=0; i<pietre.size()-1; i++)
 		{
 			pietre.set(i, pietre.get(i+1));
 		}

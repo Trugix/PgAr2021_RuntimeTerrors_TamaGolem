@@ -5,6 +5,5 @@ public class Main
 	{
 		System.out.println(WELCOME);
 		Equilibrio.generaEquilibrio(5);
-		
 	}
 }

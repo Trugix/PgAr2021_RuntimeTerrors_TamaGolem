@@ -8,7 +8,7 @@ public class Golem
 	private int vita;
 	private boolean isMorto = false;
 	private ArrayList<Elemento> stones = new ArrayList<>();
-	//private int selectedStone = 0; // indice della pietra selezionata
+
 
 	public Golem(String nome) {
 		this.nome = nome;

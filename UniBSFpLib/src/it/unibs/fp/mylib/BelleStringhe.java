@@ -17,7 +17,7 @@ public class BelleStringhe
 
 	public static String pickAnElement()
 	{
-			return coolNames.get(NumeriCasuali.estraiIntero(0, Elements.size()-1));
+			return Elements.get(NumeriCasuali.estraiIntero(0, Elements.size()-1));
 	}
 
  public static String incornicia (String s)

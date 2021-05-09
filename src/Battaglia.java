@@ -1,6 +1,5 @@
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.NumeriCasuali;
-
 import java.util.ArrayList;
 
 public class Battaglia

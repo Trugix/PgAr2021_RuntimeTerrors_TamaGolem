@@ -8,6 +8,17 @@ public class Equilibrio
 	private static ArrayList<Arco> archi = new ArrayList<>();       //lista di tutti gli archi(indipendente da nodi)
 	
 	
+	
+	private static boolean cercaEle(String nome)
+	{
+		for (Elemento e: elementi)
+		{
+			if(e.getNome().equals(nome))
+				return true;
+		}
+		return false;
+	}
+
 	/**
 	 * genera tutti i nodi, e tutti gli associamenti, poi associa a ogni nodo i suoi collegamenti con gli altri nodi
 	 * @param nElements il numero di nodi da generare
@@ -17,7 +28,12 @@ public class Equilibrio
 		boolean trovato;
 		for (int i = 0; i < nElements; i++)
 		{
-			Elemento e = new Elemento(i, BelleStringhe.pickAnElement());
+			String nomeEle;
+			do
+			{
+				nomeEle = BelleStringhe.pickAnElement();
+			}while(cercaEle(nomeEle));
+			Elemento e = new Elemento(i, nomeEle);
 			elementi.add(e);
 		}
 		for (Nodo n : elementi) //scorro i nodi
@@ -55,6 +71,11 @@ public class Equilibrio
 		{
 			a.stampaNodo();
 		}
+	}
+	
+	public static ArrayList<Elemento> getElementi()
+	{
+		return elementi;
 	}
 	
 	/*public static void equilibraNodi()

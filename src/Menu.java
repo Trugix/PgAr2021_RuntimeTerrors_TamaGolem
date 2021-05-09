@@ -14,7 +14,9 @@ public class Menu
 	private static final String STONES_P1 = "Pietre Giocatore 1";
 	private static final String STONES_P2 = "Pietre Giocatore 2";
 
-	private static final String[] SCELTE_FINE_PARTITA = {"Nuova partita", "Visualizza classifica giocatori", "Concludi il programma" /*, meme */};
+	private static final String[] SCELTE_FINE_PARTITA = {"Stampa equilibrio partita", "Nuova partita", "Visualizza classifica giocatori", "Concludi il programma" /*, meme */};
+	private static final String ADDIO = "Arrivederci";
+	
 	private static String nome1;
 	private static String nome2;
 	private static int scelta;
@@ -56,13 +58,16 @@ public class Menu
 		switch (scelta)
 		{
 			case 1:
-				ilMenu();
+				//todo stampa equilibrio per utente
 				break;
 			case 2:
-				//classifica reader and writer
+				ilMenu();
 				break;
 			case 3:
+				//todo classifica reader and writer
 				break;
+			case 0:
+			
 			default:
 				System.out.println("Non dovresti essere qui  scelta nuova partità");
 				break;
@@ -121,6 +126,7 @@ public class Menu
 				System.out.println("HOW the fuck are u here golems");
 		}
 	}
+	
 	public static void sceltaDifficolta()
 	{
 		menu = new MyMenu(INSERISCI_DIFFICOLTA, SCELTE_DIFFICOLTA);
@@ -142,12 +148,15 @@ public class Menu
 			case 4:
 				nElements = InputDati.leggiInteroPositivo(INSERISCI_NUMERO_ELEMENTI);
 				break;
-
+			case 0:
+				System.exit(99);
+				break;
 			default:
 				System.out.println("HOW the fuck are u here difficoltà");
 		}
 		nStones = ((int) Math.ceil(((double) nElements + 1.0) / 3.0) + 1);                                            //genera numero pietre per golem
-		nGolems = (int) Math.ceil((double) ((nElements - 1) * (nElements - 2)) / (double) (2 * nStones));               //genera numero gole
+		nGolems = (int) Math.ceil((double) ((nElements - 1) * (nElements - 2)) / (double) (2 * nStones));       //genera numero golem
+		Equilibrio.generaEquilibrio(nElements);
 		battle = new Battaglia(new Giocatore(nome1), new Giocatore(nome2), nElements);
 	}
 	public static void inserimentoGiocatori()

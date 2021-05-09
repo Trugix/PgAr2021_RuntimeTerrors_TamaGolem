@@ -40,4 +40,8 @@ public class Golem
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public ArrayList<Elemento> getStones() {
+		return stones;
+	}
 }

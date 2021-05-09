@@ -16,6 +16,7 @@ public class Arco
 		this.inizio = a.getInizio();
 		this.fine = a.getFine();
 		this.peso = a.getPeso();
+		this.fixed = a.isFixed();
 	}
 	
 	public Nodo getInizio()

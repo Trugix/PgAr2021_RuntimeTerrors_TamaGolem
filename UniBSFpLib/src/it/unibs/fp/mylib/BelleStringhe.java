@@ -7,8 +7,8 @@ public class BelleStringhe
  private final static String SPAZIO = " ";
  private final static String CORNICE = "---------------------------------------------------";
  private final static String ACAPO = "\n";
- private static final List<String> coolNames = Arrays.asList("Giorgio", "Golemmo", "Gormita", "Giangiotto", "Argillo", "Argillino", "Sparkly", "Margot", "Hottie", "Shocky", "Asdrubale", "Kali", "Kibly", "Lucky", "Rick Astley");
- private static final List<String> Elements = Arrays.asList("Aria", "Acqua", "Terra", "Tuono", "Fuoco", "Etere", "Oscurità", "Morte", "Lotta", "Erba", "Luce", "Ghiaccio", "Psichico", "Spirito", "Legno", "Gravità", "Benedetto", "Maledetto", "Cristallo","Acciaio");
+ private static final List<String> coolNames = Arrays.asList("Giorgio", "Golemmo", "Gormita", "Giangiotto", "Argillo", "Argillino", "Sparkly", "Margot", "Hottie", "Shocky", "Asdrubale", "Kali", "Kibly", "Lucky", "Rick_Astley");
+ private static final List<String> Elements = Arrays.asList("Aria", "Acqua", "Terra", "Tuono", "Fuoco", "Etere", "Oscurità", "Morte", "Lotta", "Erba", "Luce", "Ghiaccio", "Psichico", "Spirito", "Legno", "Gravità", "Benedetto", "Maledetto", "Cristallo","Acciaio", "Natura");
 
 	public static String pickAname()
 	{

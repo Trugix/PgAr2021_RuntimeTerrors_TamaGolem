@@ -42,7 +42,7 @@ public class Nodo
 	
 	public void stampaNodo()
 	{
-		System.out.println("Nodo: " + id);
+		System.out.println("Elemento: " + id);
 		for (Arco c : contatti)
 		{
 			c.stampaArco();

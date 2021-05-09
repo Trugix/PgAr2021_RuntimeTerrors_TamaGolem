@@ -10,4 +10,9 @@ public class Elemento extends Nodo{
     {
         this.nome = nome;
     }
+    
+    public String getNome()
+    {
+        return nome;
+    }
 }

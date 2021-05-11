@@ -1,5 +1,7 @@
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.NumeriCasuali;
+import it.unibs.fp.mylib.Utility;
+
 import java.util.ArrayList;
 
 public class Battaglia
@@ -12,13 +14,8 @@ public class Battaglia
 	private int nSpareStonesforElement;
 	private Giocatore player1;
 	private Giocatore player2;
-	private ArrayList <String> nomiPietre = new ArrayList<>();
-	private ArrayList <Integer> numeroPietre = new ArrayList<>();
-	public Battaglia(Giocatore p1, Giocatore p2)
-	{
-		this.player1 = p1;
-		this.player2 = p2;
-	}
+	private ArrayList<String> nomiPietre = new ArrayList<>();
+	private ArrayList<Integer> numeroPietre = new ArrayList<>();
 	
 	public Battaglia(Giocatore p1, Giocatore p2, int elements)
 	{
@@ -32,6 +29,9 @@ public class Battaglia
 		inizializzaPietre();
 	}
 	
+	/**
+	 * inizializza le due liste di elementi equantità per l'inserimento delle pietre
+	 */
 	private void inizializzaPietre()
 	{
 		for (Elemento e : Equilibrio.getElementi())
@@ -65,6 +65,11 @@ public class Battaglia
 		return player2;
 	}
 	
+	/**
+	 * cerca se esiste gia un golem con quel nome nelle liste dei giocatori
+	 * @param nome
+	 * @return true se esiste
+	 */
 	public boolean cercaGolemNome(String nome)
 	{
 		for (Golem g : player1.getGolemList())
@@ -78,44 +83,55 @@ public class Battaglia
 		return false;
 	}
 	
+	/**
+	 * gestisce la fase di lancio delle pietre
+	 * @param pietreA pietra del golem di p1
+	 * @param pietreB pietra del golem di p2
+	 */
 	public void attacco(Elemento pietreA, Elemento pietreB)
 	{
-        System.out.println("Il golem: "+ player1.getGolemInCampo().getNome() + " lancia la pietra: "+ pietreA.getNome());
-        System.out.println("Il golem: "+ player2.getGolemInCampo().getNome() + " lancia la pietra: "+ pietreB.getNome());
-        for (int i = 0; i < pietreA.getContatti().size(); i++)
+		System.out.println("Il golem " + player1.getGolemInCampo().getNome() + " lancia la pietra: " + pietreA.getNome());
+		System.out.println("Il golem " + player2.getGolemInCampo().getNome() + " lancia la pietra: " + pietreB.getNome());
+		System.out.println();
+		
+		for (int i = 0; i < pietreA.getContatti().size(); i++)
 		{
-			if (pietreA.getNome().equals(pietreB.getNome())) break;
+			if (pietreA.getNome().equals(pietreB.getNome()))//controlla se sono lo stesso elemento
+			{
+				System.out.println("I due non interagiscono!");
+				break;
+			}
 			if (pietreA.getContatti().get(i).getFine().getId() == pietreB.getId())
 			{
 				if (pietreA.getContatti().get(i).getPeso() > 0)
 				{
-					player2.getGolemInCampo().setVita(player2.getGolemInCampo().getVita() - Math.abs(pietreA.getContatti().get(i).getPeso()));
-					System.out.println("Il golem " + player2.getGolemInCampo().getNome() + " subisce " + Math.abs(pietreA.getContatti().get(i).getPeso()));
-					if (player2.getGolemInCampo().getVita() > 0)
-						System.out.println("Vita rimanente del golem " + player2.getGolemInCampo().getNome() + ": " + player2.getGolemInCampo().getVita());
-					else
-					{
-						System.out.println("Il golem: " + player2.getGolemInCampo().getNome() + " is no more");
-						player2.getGolemInCampo().setIsMorto(true);
-					}
+					int danno = Math.abs(pietreB.getContatti().get(i).getPeso());
+					aggiornaVita(player2.getGolemInCampo(), danno);
 				}
 				else
 				{
-					player1.getGolemInCampo().setVita(player1.getGolemInCampo().getVita() - Math.abs(pietreB.getContatti().get(i).getPeso()));
-					System.out.println("Il golem " + player1.getGolemInCampo().getNome() + " subisce " + Math.abs(pietreB.getContatti().get(i).getPeso()));
-					if (player1.getGolemInCampo().getVita() > 0)
-						System.out.println("Vita rimanente del golem " + player1.getGolemInCampo().getNome() + ": " + player1.getGolemInCampo().getVita());
-					else
-					{
-						System.out.println("Il golem: " + player1.getGolemInCampo().getNome() + " is no more");
-						player1.getGolemInCampo().setIsMorto(true);
-					}
+					int danno = Math.abs(pietreB.getContatti().get(i).getPeso());
+					aggiornaVita(player1.getGolemInCampo(), danno);
 				}
 				break;
 			}
 		}
 	}
 	
+	/**
+	 * aggiorna la vita del golem che prende danno
+	 * @param golem
+	 * @param danno
+	 */
+	private void aggiornaVita(Golem golem, int danno)
+	{
+		golem.setVita(golem.getVita() - danno);
+		System.out.println("Il golem " + golem.getNome() + " subisce " + danno);
+		if (golem.getVita() > 0)
+			System.out.println("Vita rimanente del golem " + golem.getNome() + ": " + golem.getVita());
+		else
+			System.out.println("Il golem " + golem.getNome() + " is no more");
+	}
 	
 	public ArrayList<Elemento> giraPietre(ArrayList<Elemento> pietre)
 	{
@@ -131,16 +147,17 @@ public class Battaglia
 	
 	public void start()
 	{
-		System.out.println("Numero di elementi: " + nElements + "\nNumero di pietre totali: " + nSpareStones + "\nNumero di pietre per ogni elemento: " + nSpareStonesforElement + "\nNumero di golem per giocatore: " + nGolems + "\nNumero di pietre per golem: " + nStonesInGolem);
+		System.out.println("Numero di elementi: " + nElements + "\nNumero di pietre totali: " + nSpareStones + "\nNumero di pietre per ogni elemento: " + nSpareStonesforElement + "\nNumero di golem per giocatore: " + nGolems + "\nNumero di pietre per golem: " + nStonesInGolem + "\nVita dei golem: " + Golem.VITA_MAX + "\n\n");
+		InputDati.leggiStringaNonVuota("\nPremere invio per iniziare lo scontro....");
 		if (NumeriCasuali.testaOcroce() == 1)
 		{
-			System.out.println("Il giocatore " + player1.getName() + " evoca per primo");
+			System.out.println("Il giocatore " + player1.getName() + " evoca per primo\n");
 			evocazione(player1);
 			evocazione(player2);
 		}
 		else
 		{
-			System.out.println("Il giocatore " + player2.getName() + " evoca per primo");
+			System.out.println("Il giocatore " + player2.getName() + " evoca per primo\n");
 			evocazione(player2);
 			evocazione(player1);
 		}
@@ -148,16 +165,28 @@ public class Battaglia
 		scontro();
 		
 		//todo rivedere classifica e punteggi
-		if (player1.getGolemList().size() == 0)
+		if(player1.getGolemList().size() == 0 && player2.getGolemList().size() == 0)
 		{
-			System.out.println("Il giocatore " + player2.getName() + " ha vinto lo scontro!");
-			player2.setPunteggio(player2.getPunteggio() + player2.getGolemList().size());
+			System.out.println("Lo scontro è un pareggio!");
 		}
-		if (player2.getGolemList().size() == 0)
+		else
 		{
-			System.out.println("Il giocatore " + player2.getName() + " ha vinto lo scontro!");
-			player2.setPunteggio(player2.getPunteggio() + player2.getGolemList().size());
+			if (player1.getGolemList().size() == 0)
+			{
+				System.out.println("Il giocatore " + player2.getName() + " ha vinto lo scontro!");
+				player2.setPunteggio(player2.getPunteggio() + player2.getGolemList().size());
+			}
+				else
+			{
+				if (player2.getGolemList().size() == 0)
+				{
+					System.out.println("Il giocatore " + player1.getName() + " ha vinto lo scontro!");
+					player2.setPunteggio(player2.getPunteggio() + player2.getGolemList().size());
+				}
+			}
 		}
+		InputDati.leggiStringa("Premi invio per passare al menu di fine partita...");
+		Utility.clearScreen();
 		Menu.nuovaPartita();
 	}
 	
@@ -245,7 +274,7 @@ public class Battaglia
 		String scelta;
 		do
 		{
-			scelta = InputDati.leggiStringaNonVuota("Inserire il nome del golem da evocare: ");
+			scelta = InputDati.leggiStringaNonVuota("Inserire il nome del golem da evocare: ").toUpperCase();
 			for (Golem golem : g.getGolemList())
 			{
 				if (golem.getNome().toUpperCase().equals(scelta))
@@ -257,6 +286,7 @@ public class Battaglia
 			if (!pronto) System.out.println("Questo golem non è presente nella lista di questo giocatore");
 		}
 		while (!pronto);
+		Utility.clearScreen();
 		inserisciPietre(g.getGolemInCampo());
 	}
 	

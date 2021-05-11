@@ -200,8 +200,9 @@ public class Equilibrio
 			}
 		}
 		while (zero==0 || max>=Golem.VITA_MAX/2); //nel caso estremo in cui tutto il resto non sia riuscito a bilanciare il gioco l'equilibrio viene rigenerato.
-	}                               // è una cosa relativamente rara che non rallenta (non troppo) il codice e non dovrebbe verificarsi troppo spesso E.
-									//leggi panick button R.
+													// è una cosa relativamente rara che non rallenta (non troppo) il codice e non dovrebbe verificarsi troppo spesso E.
+													//leggi panick button R.
+	}
 
 	/**
 	 * può succedere che nella generazione l'ultima arco (usato per equilibrare), sia zero, quindi questo metodo sistema questa evenienza
@@ -272,74 +273,7 @@ public class Equilibrio
 			}
 		}
 	}
-
-	/*
-	public static void equilibraNodi3()
-	{
-		boolean[] vettore = new boolean[elementi.size() - 1];
-		int forte, debole, numF, numD, contaF = 1, contaD = 1;
-		for (Elemento e : elementi)
-		{
-			forte = NumeriCasuali.estraiIntero(0, elementi.size() - 1);
-			vettore[forte] = true;
-			do
-			{
-				debole = NumeriCasuali.estraiIntero(0, elementi.size() - 1);
-				vettore[debole] = false;
-			}
-			while (debole == forte);
-			e.getContatti().get(forte).setFixed(true);
-			e.getContatti().get(debole).setFixed(true);
-			for (int i = 0; i < e.getContatti().size(); i++)
-			{
-				if (!e.getContatti().get(i).isFixed())
-				{
-					if (NumeriCasuali.testaOcroce() > 0)
-					{
-						vettore[i] = true;
-					}
-					else
-					{
-						vettore[i] = false;
-					}
-				}
-				numF = numForte(vettore);
-				numD = e.getContatti().size() - numF;
-				for (int conta = 1; conta < e.getContatti().size(); conta++)
-				{
-					if (numF < numD)
-					{
-						if (numF == conta)
-						{
-							e.getContatti().get(forte).setPeso(NumeriCasuali.estraiIntero((int) Math.ceil((double) (e.getContatti().size() - conta) / (double) numF), 10));
-						}
-						if (!(e.getContatti().get(i).isFixed()) && contaF < numF && vettore[i] == true)
-						{
-							contaF++;
-							e.getContatti().get(i).setPeso(NumeriCasuali.estraiIntero((int) Math.ceil((double) (e.getContatti().size() - conta) / (double) numF), 10));
-						}
-						else
-						{
-							if (!(e.getContatti().get(i).isFixed()) && contaD < numD && vettore[i] == false)
-							{
-								contaD++;
-								e.getContatti().get(i).setPeso(NumeriCasuali.estraiIntero((int) Math.ceil((double) (e.getContatti().size() - conta) / (double) numF), 10));
-							}
-						}
-					}
-					if (numD < numF)
-					{
-						if (numD == conta)
-						{
-							e.getContatti().get(debole).setPeso(NumeriCasuali.estraiIntero(e.getContatti().size() - conta, 10));
-						}
-					}
-				}
-				
-			}
-		}
-	}
-	*/
+	
 	/**
 	 * preso un nodo ordino il suo vettore di archi in modo che gli archi partano tutti da esso e terminino in altri nodi.
 	 */

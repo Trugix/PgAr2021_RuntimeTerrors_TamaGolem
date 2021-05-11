@@ -1,6 +1,6 @@
 public class Arco
 {
-	private Nodo inizio, fine;
+	private Elemento inizio, fine;
 	private int peso;
 	private boolean fixed = false; //attributo che viene usato nel bilanciamento, quando true l'arco non viene più cambiato
 	
@@ -24,7 +24,7 @@ public class Arco
 		return inizio;
 	}
 	
-	public void setInizio(Nodo inizio)
+	public void setInizio(Elemento inizio)
 	{
 		this.inizio = inizio;
 	}

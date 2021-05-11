@@ -14,15 +14,16 @@ public class Menu
 	private static final String STONES_P1 = "Pietre Giocatore 1";
 	private static final String STONES_P2 = "Pietre Giocatore 2";
 
-	private static final String[] SCELTE_FINE_PARTITA = {"Stampa equilibrio partita", "Nuova partita", "Visualizza classifica giocatori", "Concludi il programma" /*, meme */};
+	private static final String[] SCELTE_FINE_PARTITA = {"Stampa equilibrio partita", "Nuova partita", "Visualizza classifica giocatori" /*, meme */};
 	private static final String ADDIO = "Arrivederci";
+	
 	
 	private static String nome1;
 	private static String nome2;
 	private static int scelta;
 	private static Battaglia battle = null;
 	private static MyMenu menu;
-	
+	private static boolean stessoEquilibrio=false;
 	private static int nElements;
 	private static int nGolems;
 	private static int nStones;
@@ -46,32 +47,39 @@ public class Menu
     public static void ilMenu()
 	{
 		inserimentoGiocatori();
+		Utility.clearScreen();
 		sceltaDifficolta();
+		Utility.clearScreen();
 		inserimentoGolem();
+		Utility.clearScreen();
 		battle.start();
 	}
 
 	public static void nuovaPartita()
 	{
 		MyMenu menu = new MyMenu("Menu di fine partita", SCELTE_FINE_PARTITA);
-		int scelta = menu.scegli();
-		switch (scelta)
+		do
 		{
-			case 1:
-				//todo stampa equilibrio per utente
-				break;
-			case 2:
-				ilMenu();
-				break;
-			case 3:
-				//todo classifica reader and writer
-				break;
-			case 0:
-			
-			default:
-				System.out.println("Non dovresti essere qui  scelta nuova partità");
-				break;
-		}
+			int scelta = menu.scegli();
+			switch (scelta)
+			{
+				case 1:
+					Equilibrio.stampaEquilibrio();
+					break;
+				case 2:
+					stessoEquilibrio=InputDati.yesOrNo("Vuoi usare lo stesso equilibrio?");
+					ilMenu();
+					break;
+				case 3:
+					//todo classifica reader and writer
+					break;
+				case 0:
+				
+				default:
+					System.out.println("Non dovresti essere qui  scelta nuova partità");
+					break;
+			}
+		}while (scelta!=0);
 
 	}
 
@@ -156,16 +164,24 @@ public class Menu
 		}
 		nStones = ((int) Math.ceil(((double) nElements + 1.0) / 3.0) + 1);                                            //genera numero pietre per golem
 		nGolems = (int) Math.ceil((double) ((nElements - 1) * (nElements - 2)) / (double) (2 * nStones));       //genera numero golem
-		Equilibrio.generaEquilibrio(nElements);
+		if(!stessoEquilibrio) Equilibrio.generaEquilibrio(nElements);
 		battle = new Battaglia(new Giocatore(nome1), new Giocatore(nome2), nElements);
 	}
+	
 	public static void inserimentoGiocatori()
 	{
 		do
 		{
-			nome1 = InputDati.leggiStringaNonVuota(INSERISCI_NOME1);
-			nome2 = InputDati.leggiStringaNonVuota(INSERISCI_NOME2);
+			do
+			{
+				nome1 = InputDati.leggiStringaNonVuota(INSERISCI_NOME1);
+				nome2 = InputDati.leggiStringaNonVuota(INSERISCI_NOME2);
+				if (nome1.trim().equals(nome2.trim()))
+				{
+					System.out.println("\nI nomi dei giocatori devono essere diversi");
+				}
+			}while (nome1.trim().equals(nome2.trim()));
 		}
-		while (!InputDati.yesOrNo("Sei sicuro di usare questi nomi?"));
+		while (!InputDati.yesOrNo("\nSei sicuro di usare questi nomi?"));
 	}
 }

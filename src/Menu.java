@@ -88,13 +88,13 @@ public class Menu
 				{
 					do
 					{
-						nome = BelleStringhe.pickAname();
+						nome = BelleStringhe.pickAName();
 					}
 					while (battle.cercaGolemNome(nome));
 					battle.getPlayer1().addToGolemList(new Golem(nome));
 					do
 					{
-						nome = BelleStringhe.pickAname();
+						nome = BelleStringhe.pickAName();
 					}
 					while (battle.cercaGolemNome(nome));
 					battle.getPlayer2().addToGolemList(new Golem(nome));

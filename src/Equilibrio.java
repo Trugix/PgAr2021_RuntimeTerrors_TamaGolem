@@ -6,9 +6,18 @@ public class Equilibrio
 {
 	private static final ArrayList<Elemento> elementi = new ArrayList<>();  //lista di tutti i nodi
 	private static ArrayList<Arco> archi = new ArrayList<>();       //lista di tutti gli archi(indipendente da nodi)
-	
-	
-	
+
+
+	public static ArrayList<Elemento> getElementi()
+	{
+		return elementi;
+	}
+
+	/**
+	 * cerca se esiste già un elemento con questo nome
+	 * @param nome	il nome da cercare
+	 * @return true se esiste già
+	 */
 	private static boolean cercaEle(String nome)
 	{
 		for (Elemento e: elementi)
@@ -73,10 +82,7 @@ public class Equilibrio
 		}
 	}
 	
-	public static ArrayList<Elemento> getElementi()
-	{
-		return elementi;
-	}
+
 	
 	/*public static void equilibraNodi()
 	{
@@ -187,56 +193,11 @@ public class Equilibrio
 					i++;
 				}
 				while (somma != 0); //finché non è equilibrato ripete il procedimento
-				
-				//todo fare metodo
-				for (int j = c; j < n.getContatti().size(); j++)
-				{
-					if (vettore[j] == 0)
-					{
-						for (int k = c; k < n.getContatti().size(); k++)
-						{
-							if (vettore[k] != 1 && k != j)
-							{
-								vettore[k]--;
-								vettore[j]++;
-								break;
-							}
-						}
-					}
-				}
-				
-				i = 0;
-				
-				//todo fare metodo
-				for (Arco a : n.getContatti())
-				{
-					if (!a.isFixed())
-					{
-						a.setPeso(vettore[i]);
-						a.setFixed(true);
-					}
-					i++;
-				}
-				
-				//todo fare metodo
-				for (Arco a : n.getContatti())
-				{
-					for (Elemento n2 : elementi)
-					{
-						if (n2.getId() == n.getId())
-							continue;
-						for (Arco a2 : n2.getContatti())
-						{
-							if (a2.archiUguali(a))
-							{
-								a2.setFixed(true);
-								a2.setPeso((-1) * a.getPeso());
-							}
-						}
-					}
-				}
+
+				vettore = sistemaZeri(n, vettore, c);
+				setPesoArchi(n, vettore);
+				sistemaOpposti(n);
 			}
-		
 			for (Elemento n : elementi)
 			{
 				for (Arco a:n.getContatti())
@@ -246,10 +207,81 @@ public class Equilibrio
 				}
 			}
 		}
-		while (zero==0 || max>=15); //nel caso estremo in cui tutto il resto non sia riuscito a bilanciare il gioco l'equilibrio viene rigenerato.
-	}                               // è una cosa relativamente rara che non rallenta (non troppo) il codice e non dovrebbe verificarsi troppo spesso
-									//leggi panick button
-	
+		while (zero==0 || max>=Golem.VITA_MAX/2); //nel caso estremo in cui tutto il resto non sia riuscito a bilanciare il gioco l'equilibrio viene rigenerato.
+	}                               // è una cosa relativamente rara che non rallenta (non troppo) il codice e non dovrebbe verificarsi troppo spesso E.
+									//leggi panick button R.
+
+	/**
+	 * può succedere che nella generazione l'ultima arco (usato per equilibrare), sia zero, quindi questo metodo sistema questa evenienza
+	 * @param n il nodo
+	 * @param v i pesi degli archi
+	 * @param c l'indice da cui iniziare a poter modificare (quelli prima sarranno già fixed)
+	 * @return il vettore sistemato
+	 */
+	private static int[] sistemaZeri(Elemento n, int[] v, int c)
+	{
+		for (int j = c; j < n.getContatti().size(); j++)
+		{
+			if (v[j] == 0)
+			{
+				for (int k = c; k < n.getContatti().size(); k++)
+				{
+					if (v[k] != 1 && k != j)
+					{
+						v[k]--;
+						v[j]++;
+						break;
+					}
+				}
+			}
+		}
+		return v;
+	}
+
+	/**
+	 *
+	 * @param n il nodo
+	 * @param v il vettore dei pesi da settare agli archi del nodo
+	 */
+	private static void setPesoArchi(Elemento n, int[] v)
+	{
+		int i = 0;
+		for (Arco a : n.getContatti())
+		{
+			if (!a.isFixed())
+			{
+				a.setPeso(v[i]);
+				a.setFixed(true);
+			}
+			i++;
+		}
+	}
+
+	/**
+	 * setta gli archi opposti a quelli già generati (es. già generato e settato l'arco 0,1 con peso 3, allora setta anche 1,0 con peso -3)
+	 * @param n il nodo
+	 */
+	private static void sistemaOpposti(Elemento n)
+	{
+		for (Arco a : n.getContatti())
+		{
+			for (Elemento n2 : elementi)
+			{
+				if (n2.getId() == n.getId())
+					continue;
+				for (Arco a2 : n2.getContatti())
+				{
+					if (a2.archiUguali(a))
+					{
+						a2.setFixed(true);
+						a2.setPeso((-1) * a.getPeso());
+					}
+				}
+			}
+		}
+	}
+
+	/*
 	public static void equilibraNodi3()
 	{
 		boolean[] vettore = new boolean[elementi.size() - 1];
@@ -315,7 +347,7 @@ public class Equilibrio
 			}
 		}
 	}
-	
+	*/
 	/**
 	 * preso un nodo ordino il suo vettore di archi in modo che gli archi partano tutti da esso e terminino in altri nodi.
 	 */
@@ -333,7 +365,7 @@ public class Equilibrio
 		}
 	}
 	
-	public static int numForte(boolean[] v)
+	/*public static int numForte(boolean[] v)
 	{
 		int conta = 0;
 		for (boolean b : v)
@@ -342,5 +374,5 @@ public class Equilibrio
 				conta++;
 		}
 		return conta;
-	}
+	}*/
 }

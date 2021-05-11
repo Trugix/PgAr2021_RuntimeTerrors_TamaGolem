@@ -44,9 +44,10 @@ public class Battaglia
     private void stampaPietre ()
     {
         System.out.println("Pietre disponibili: ");
+		System.out.println("\tElemento:\t\t\t |\t Disponibili: ");
         for (int i=0; i<Equilibrio.getElementi().size();i++)
         {
-            System.out.println("Elemento: "+nomiPietre.get(i)+" Numero di pietre disponibili: "+ numeroPietre.get(i));
+			System.out.println("\t"+nomiPietre.get(i)+"\t\t\t\t -\t\t"+numeroPietre.get(i));
         }
     }
     
@@ -259,10 +260,4 @@ public class Battaglia
             while (!trovato);
         }
 	}
-	
-	/* Elemento         qunatità disponibile
-		aria                    3
-		acqua                   4
-		ecc.
-	 */
 }

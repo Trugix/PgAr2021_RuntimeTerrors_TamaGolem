@@ -45,9 +45,9 @@ public class Equilibrio
 			Elemento e = new Elemento(i, nomeEle);
 			elementi.add(e);
 		}
-		for (Nodo n : elementi) //scorro i nodi
+		for (Elemento n : elementi) //scorro i nodi
 		{
-			for (Nodo n2 : elementi) //scorro gli altri nodi
+			for (Elemento n2 : elementi) //scorro gli altri nodi
 			{
 				if (!n.equals(n2))//Entra solo se non è se stesso
 				{
@@ -70,16 +70,8 @@ public class Equilibrio
 				}
 			}
 		}
-		for (Arco a : archi)
-		{
-			a.stampaArco();
-		}
 		riordinaNodi();
 		equilibraNodi2();
-		for (Elemento a : elementi)
-		{
-			a.stampaNodo();
-		}
 	}
 	
 
@@ -365,14 +357,14 @@ public class Equilibrio
 		}
 	}
 	
-	/*public static int numForte(boolean[] v)
+	public static void stampaEquilibrio ()
 	{
-		int conta = 0;
-		for (boolean b : v)
+		Utility.clearScreen();
+		System.out.println("Ecco l'equilibrio di questa partita: \n");
+		for (Elemento e: elementi)
 		{
-			if (b)
-				conta++;
+			e.stampaElemento();
 		}
-		return conta;
-	}*/
+	}
+	
 }

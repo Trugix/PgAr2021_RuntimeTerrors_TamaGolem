@@ -4,7 +4,7 @@ public class Arco
 	private int peso;
 	private boolean fixed = false; //attributo che viene usato nel bilanciamento, quando true l'arco non viene più cambiato
 	
-	public Arco(Nodo inizio, Nodo fine, int peso)
+	public Arco(Elemento inizio, Elemento fine, int peso)
 	{
 		this.inizio = inizio;
 		this.fine = fine;
@@ -19,7 +19,7 @@ public class Arco
 		this.fixed = a.isFixed();
 	}
 	
-	public Nodo getInizio()
+	public Elemento getInizio()
 	{
 		return inizio;
 	}
@@ -49,12 +49,12 @@ public class Arco
 		return fixed;
 	}
 	
-	public Nodo getFine()
+	public Elemento getFine()
 	{
 		return fine;
 	}
 	
-	public void setFine(Nodo fine)
+	public void setFine(Elemento fine)
 	{
 		this.fine = fine;
 	}
@@ -71,7 +71,10 @@ public class Arco
 	
 	public void stampaArco()
 	{
-		System.out.println("Arco:  " + "inizio: " + this.inizio.getId() + " fine: " + this.fine.getId() + " Danno: " + this.peso);
+		if (this.peso>0)
+			System.out.println(this.inizio.getNome() + " fa danno " + Math.abs(this.peso) + " a " + this.fine.getNome());
+		else
+			System.out.println(this.inizio.getNome() + " subisce danno " + Math.abs(this.peso) + " da " + this.fine.getNome());
 	}
 	
 	/**

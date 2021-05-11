@@ -40,13 +40,4 @@ public class Nodo
 		return contatti;
 	}
 	
-	public void stampaNodo()
-	{
-		System.out.println("Elemento: " + id);
-		for (Arco c : contatti)
-		{
-			c.stampaArco();
-		}
-		System.out.println("\n");
-	}
 }

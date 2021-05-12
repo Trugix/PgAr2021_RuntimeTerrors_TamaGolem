@@ -240,6 +240,7 @@ public class Battaglia
 				{
 					System.out.println("Il golem di " + player2.getName() + " è stato distrutto!");
 					player2.getGolemList().remove(player2.getGolemInCampo());
+					player1.setPunteggio(player1.getPunteggio()+1);
 					if (player2.getGolemList().size() == 0)
 					{
 						System.out.println("Il giocatore " + player2.getName() + " ha finito i golem");

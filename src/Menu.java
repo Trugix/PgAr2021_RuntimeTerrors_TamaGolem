@@ -1,5 +1,7 @@
 import it.unibs.fp.mylib.*;
 
+import java.util.ArrayList;
+
 public class Menu
 {
 	
@@ -14,7 +16,8 @@ public class Menu
 	private static final String STONES_P1 = "Pietre Giocatore 1";
 	private static final String STONES_P2 = "Pietre Giocatore 2";
 
-	private static final String[] SCELTE_FINE_PARTITA = {"Stampa equilibrio partita", "Nuova partita", "Visualizza classifica giocatori" /*, meme */};
+	private static final String[] SCELTE_FINE_PARTITA = {"Stampa equilibrio partita", "Nuova partita", "Visualizza classifica giocatori", "Resetta classifica"/*, meme */};
+	private static final String[] SCELTA_GIOCATORE = {"Nuovo giocatore", "Carica giocatore"};
 	private static final String ADDIO = "Arrivederci";
 	
 	
@@ -27,6 +30,11 @@ public class Menu
 	private static int nElements;
 	private static int nGolems;
 	private static int nStones;
+	
+	private static Giocatore giocatore1, giocatore2;
+	
+	private static ArrayList <Giocatore> giocatori = new ArrayList<Giocatore>();
+	private static ArrayList <Giocatore> giocatorDaOrdinare = new ArrayList<Giocatore>();
 	
     public static int getnElements()
     {
@@ -42,9 +50,44 @@ public class Menu
     {
         return nGolems;
     }
-    
-    
-    public static void ilMenu()
+	
+	public static ArrayList<Giocatore> getGiocatori()
+	{
+		return giocatori;
+	}
+	
+	public static void setGiocatori(ArrayList<Giocatore> giocatori)
+	{
+		Menu.giocatori = giocatori;
+	}
+	
+	private static void stampaClassifica ()
+	{
+		giocatorDaOrdinare.addAll(giocatori);
+		Utility.clearScreen();
+		System.out.printf("%10s %15s %10s\n","Posizione","Nome","Punteggio");
+		int i =1;
+		do
+		{
+			int max = giocatorDaOrdinare.get(0).getPunteggio();
+			Giocatore massimo = giocatorDaOrdinare.get(0);
+			for (int j = 0; j < giocatorDaOrdinare.size(); j++)
+			{
+				if (giocatorDaOrdinare.get(j).getPunteggio() > max)
+				{
+					max = giocatorDaOrdinare.get(j).getPunteggio();
+					massimo = giocatorDaOrdinare.get(j);
+				}
+			}
+			System.out.printf("%10s %15s %10s\n", i , massimo.getName(), max);
+			i++;
+			giocatorDaOrdinare.remove(massimo);
+		}
+		while (giocatorDaOrdinare.size()>0);
+		System.out.println("");
+	}
+	
+	public static void ilMenu()
 	{
 		inserimentoGiocatori();
 		Utility.clearScreen();
@@ -170,18 +213,71 @@ public class Menu
 	
 	public static void inserimentoGiocatori()
 	{
-		do
+		menu = new MyMenu("Inserimento giocatore", SCELTA_GIOCATORE);
+		int scelta = menu.scegli();
+		switch (scelta)
 		{
-			do
-			{
-				nome1 = InputDati.leggiStringaNonVuota(INSERISCI_NOME1);
-				nome2 = InputDati.leggiStringaNonVuota(INSERISCI_NOME2);
-				if (nome1.trim().equals(nome2.trim()))
+			case 1: // nuovo giocatore
+				do
 				{
-					System.out.println("\nI nomi dei giocatori devono essere diversi");
+					do
+					{
+						nome1 = InputDati.leggiStringaNonVuota(INSERISCI_NOME1);
+						nome2 = InputDati.leggiStringaNonVuota(INSERISCI_NOME2);
+						if (nome1.trim().equals(nome2.trim()))
+						{
+							System.out.println("\nI nomi dei giocatori devono essere diversi");
+						}
+					}while (nome1.trim().equals(nome2.trim()));
 				}
-			}while (nome1.trim().equals(nome2.trim()));
+				while (!InputDati.yesOrNo("\nSei sicuro di usare questi nomi?"));
+				giocatore1 = new Giocatore(nome1, 0);
+				giocatore2 = new Giocatore(nome2, 0);
+			break;
+			case 2: // carica giocatore\
+				String nome;
+				boolean scelto;
+				ArrayList <Giocatore> giocatoriSelezionabili = new ArrayList<>();
+				giocatoriSelezionabili.addAll(giocatori);
+				for (int i=1;i<=2;i++)
+				{
+					Utility.clearScreen();
+					System.out.print("\n\nSelezionare uno dei seguenti: ");
+					for (int j=0;j<giocatoriSelezionabili.size();j++)
+					{
+							if(j==giocatoriSelezionabili.size()-1) System.out.print(giocatoriSelezionabili.get(j).getName());
+							else System.out.print(giocatoriSelezionabili.get(j).getName()+", ");
+					}
+					do
+					{
+						scelto =false;
+						nome = InputDati.leggiStringaNonVuota("\nInserire il nome del giocatore "+i+" : ");
+						for (Giocatore g:giocatoriSelezionabili)
+						{
+							if (g.getName().equals(nome) && i==1)
+							{
+								scelto = true;
+								giocatore1 = g;
+								giocatoriSelezionabili.remove(g);
+								break;
+							}
+							if (g.getName().equals(nome) && i==2)
+							{
+								scelto = true;
+								giocatore2 = g;
+								giocatoriSelezionabili.remove(g);
+								break;
+							}
+						}
+					}
+					while (!scelto);
+				}
+			break;
+			case 0:
+				Writer.writeOutput();
+				System.exit(99);
+			break;
 		}
-		while (!InputDati.yesOrNo("\nSei sicuro di usare questi nomi?"));
+		
 	}
 }

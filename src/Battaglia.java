@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Battaglia
 {
-	
 	private int nElements;
 	private int nStonesInGolem;
 	private int nGolems;
@@ -47,7 +46,7 @@ public class Battaglia
 	private void stampaPietre()
 	{
 		System.out.println("Pietre disponibili: \n");
-		System.out.printf("%12s | %5s", "Elemento:", "Disponibili: \n");
+		System.out.printf("%12s | %5s", "Elemento", "Disponibili \n");
 		for (int i = 0; i < Equilibrio.getElementi().size(); i++)
 		{
 			System.out.printf("%12s - %5s\n", nomiPietre.get(i), numeroPietre.get(i));
@@ -149,7 +148,7 @@ public class Battaglia
 	{
 		System.out.println("Numero di elementi: " + nElements + "\nNumero di pietre totali: " + nSpareStones + "\nNumero di pietre per ogni elemento: " + nSpareStonesforElement + "\nNumero di golem per giocatore: " + nGolems + "\nNumero di pietre per golem: " + nStonesInGolem + "\nVita dei golem: " + Golem.VITA_MAX + "\n\n");
 		InputDati.leggiStringaNonVuota("\nPremere invio per iniziare lo scontro....");
-		if (NumeriCasuali.testaOcroce() == 1)
+		if (Math.random()>0.50)
 		{
 			System.out.println("Il giocatore " + player1.getName() + " evoca per primo\n");
 			evocazione(player1);
@@ -164,7 +163,7 @@ public class Battaglia
 		
 		scontro();
 		
-		//todo rivedere classifica e punteggi
+		
 		if(player1.getGolemList().size() == 0 && player2.getGolemList().size() == 0)
 		{
 			System.out.println("Lo scontro è un pareggio!");
@@ -173,15 +172,13 @@ public class Battaglia
 		{
 			if (player1.getGolemList().size() == 0)
 			{
-				System.out.println("Il giocatore " + player2.getName() + " ha vinto lo scontro!");
-				player2.setPunteggio(player2.getPunteggio() + player2.getGolemList().size());
+				System.out.println("Il giocatore " + player2.getName() + " ha vinto lo scontro");
 			}
 				else
 			{
 				if (player2.getGolemList().size() == 0)
 				{
-					System.out.println("Il giocatore " + player1.getName() + " ha vinto lo scontro!");
-					player2.setPunteggio(player2.getPunteggio() + player2.getGolemList().size());
+					System.out.println("Il giocatore " + player1.getName() + " ha vinto lo scontro");
 				}
 			}
 		}
@@ -223,6 +220,7 @@ public class Battaglia
 				{
 					System.out.println("Il golem di " + player1.getName() + " è stato distrutto!");
 					player1.getGolemList().remove(player1.getGolemInCampo());
+					player2.setPunteggio(player2.getPunteggio()+1);
 					if (player1.getGolemList().size() == 0)
 					{
 						System.out.println("Il giocatore " + player1.getName() + " ha finito i golem");
@@ -230,7 +228,7 @@ public class Battaglia
 					}
 					else
 					{
-						System.out.println("Al giocatore " + player1.getName() + " rimangono " + player1.getGolemList().size() + "golem");
+						System.out.println("Al giocatore " + player1.getName() + " rimangono " + player1.getGolemList().size() + " golem");
 					}
 					InputDati.leggiStringa("Premere invio per passare all'evocazione");
 					Utility.clearScreen();
@@ -248,7 +246,7 @@ public class Battaglia
 					}
 					else
 					{
-						System.out.println("Al giocatore " + player2.getName() + " rimangono " + player2.getGolemList().size() + "golem");
+						System.out.println("Al giocatore " + player2.getName() + " rimangono " + player2.getGolemList().size() + " golem");
 					}
 					InputDati.leggiStringa("Premere invio per passare all'evocazione");
 					Utility.clearScreen();
@@ -261,7 +259,7 @@ public class Battaglia
 	
 	public void evocazione(Giocatore g)
 	{
-		System.out.println("Evocazione del giocatore: " + g.getName());
+		System.out.println("Evocazione del giocatore " + g.getName());
 		System.out.print("Golem disponibili: ");
 		for (int i = 0; i < g.getGolemList().size(); i++)
 		{
@@ -293,7 +291,7 @@ public class Battaglia
 	
 	public void inserisciPietre(Golem g)
 	{
-		System.out.println("Inserimento pietre del golem: " + g.getNome() + "\n");
+		System.out.println("Inserimento pietre del golem " + g.getNome() + "\n");
 		for (int i = 0; i < nStonesInGolem; i++)
 		{
 			stampaPietre();
@@ -301,7 +299,7 @@ public class Battaglia
 			boolean trovato = false;
 			do
 			{
-				scelta = InputDati.leggiStringaNonVuota("Quale pietra vuoi inserire?: (nome dell'elemento)").toUpperCase();
+				scelta = InputDati.leggiStringaNonVuota("Quale pietra vuoi inserire? (nome dell'elemento)  ").toUpperCase();
 				for (int j = 0; j < Equilibrio.getElementi().size(); j++)
 				{
 					if (scelta.equals(nomiPietre.get(j).toUpperCase()))

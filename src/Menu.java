@@ -20,7 +20,7 @@ public class Menu
 	private static final String[] SCELTA_GIOCATORE = {"Nuovo giocatore", "Carica giocatore"};
 	private static final String ADDIO = "Arrivederci";
 	
-	
+	private static boolean primo=true;
 	private static String nome1;
 	private static String nome2;
 	private static int scelta;
@@ -89,6 +89,7 @@ public class Menu
 	
 	public static void ilMenu()
 	{
+		Reader.readGiocatori();
 		inserimentoGiocatori();
 		Utility.clearScreen();
 		sceltaDifficolta();
@@ -96,6 +97,8 @@ public class Menu
 		inserimentoGolem();
 		Utility.clearScreen();
 		battle.start();
+		Writer.writeOutput();
+		
 	}
 
 	public static void nuovaPartita()
@@ -114,16 +117,21 @@ public class Menu
 					ilMenu();
 					break;
 				case 3:
-					//todo classifica reader and writer
+					stampaClassifica();
+					break;
+				case 4:
+					Writer.resetGiocatori();
+					Reader.readGiocatori();
 					break;
 				case 0:
-				
+					Writer.writeOutput();
+					System.exit(99);
+					break;
 				default:
 					System.out.println("Non dovresti essere qui  scelta nuova partità");
 					break;
 			}
 		}while (scelta!=0);
-
 	}
 
 	public static void inserimentoGolem()
@@ -162,6 +170,7 @@ public class Menu
 					while (battle.cercaGolemNome(nome));
 					battle.getPlayer1().addToGolemList(new Golem(nome));
 				}
+				System.out.println("\n");
 				for (int i = 0; i < nGolems; i++)
 				{
 					do
@@ -172,7 +181,10 @@ public class Menu
 					battle.getPlayer2().addToGolemList(new Golem(nome));
 				}
 				break;
-
+			case 0:
+				Writer.writeOutput();
+				System.exit(99);
+				break;
 			default:
 				System.out.println("HOW the fuck are u here golems");
 		}
@@ -200,6 +212,7 @@ public class Menu
 				nElements = InputDati.leggiInteroPositivo(INSERISCI_NUMERO_ELEMENTI);
 				break;
 			case 0:
+				Writer.writeOutput();
 				System.exit(99);
 				break;
 			default:
@@ -208,7 +221,7 @@ public class Menu
 		nStones = ((int) Math.ceil(((double) nElements + 1.0) / 3.0) + 1);                                            //genera numero pietre per golem
 		nGolems = (int) Math.ceil((double) ((nElements - 1) * (nElements - 2)) / (double) (2 * nStones));       //genera numero golem
 		if(!stessoEquilibrio) Equilibrio.generaEquilibrio(nElements);
-		battle = new Battaglia(new Giocatore(nome1), new Giocatore(nome2), nElements);
+		battle = new Battaglia(giocatore1, giocatore2, nElements);
 	}
 	
 	public static void inserimentoGiocatori()

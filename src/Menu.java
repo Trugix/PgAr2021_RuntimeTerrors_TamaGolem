@@ -13,9 +13,7 @@ public class Menu
 	private static final String[] SCELTE_DIFFICOLTA = {"Facile", "Intermedio", "Difficile", "Custom"/*, Distruggi computer*/};
 	private static final String GOLEMS = "GOLEMS";
 	private static final String[] SCELTE_GOLEMS = {"Rent a Golem", "Personalizzati"};
-	private static final String STONES_P1 = "Pietre Giocatore 1";
-	private static final String STONES_P2 = "Pietre Giocatore 2";
-
+	
 	private static final String[] SCELTE_FINE_PARTITA = {"Stampa equilibrio partita", "Nuova partita", "Visualizza classifica giocatori", "Resetta classifica"/*, meme */};
 	private static final String[] SCELTA_GIOCATORE = {"Nuovo giocatore", "Carica giocatore"};
 	private static final String ADDIO = "Arrivederci";
@@ -29,37 +27,20 @@ public class Menu
 	
 	private static Giocatore giocatore1, giocatore2;
 	
-	private static ArrayList <Giocatore> giocatori = new ArrayList<Giocatore>();
-	private static ArrayList <Giocatore> giocatorDaOrdinare = new ArrayList<Giocatore>();
-	
-    public static int getnElements()
-    {
-        return nElements;
-    }
-    
-    public static int getnStones()
-    {
-        return nStones;
-    }
-    
-    public static int getnGolems()
-    {
-        return nGolems;
-    }
+	private static ArrayList<Giocatore> giocatori = new ArrayList<>();
+	private static ArrayList<Giocatore> giocatoriDaOrdinare = new ArrayList<>();
 	
 	public static ArrayList<Giocatore> getGiocatori()
 	{
 		return giocatori;
 	}
 	
-	public static void setGiocatori(ArrayList<Giocatore> giocatori)
+	/**
+	 * stampa la classifica
+	 */
+	private static void stampaClassifica()
 	{
-		Menu.giocatori = giocatori;
-	}
-	
-	private static void stampaClassifica ()
-	{
-		giocatorDaOrdinare.addAll(giocatori);
+		giocatoriDaOrdinare.addAll(giocatori);
 		Utility.clearScreen();
 		System.out.println("Classifica:");
 		System.out.printf("%10s %15s %10s\n", "Posizione", "Nome", "Punteggio");
@@ -78,15 +59,15 @@ public class Menu
 			}
 			System.out.printf("%10s %15s %10s\n", i, massimo.getName(), max);
 			i++;
-			giocatorDaOrdinare.remove(massimo);
+			giocatoriDaOrdinare.remove(massimo);
 		}
-		while (giocatorDaOrdinare.size()>0);
-		System.out.println("");
+		while (giocatoriDaOrdinare.size() > 0);
+		InputDati.leggiStringa("Premi invio per continuare...");
+		Utility.clearScreen();
 	}
 	
 	public static void ilMenu()
 	{
-		Reader.readGiocatori();
 		inserimentoGiocatori();
 		Utility.clearScreen();
 		sceltaDifficolta();
@@ -95,11 +76,14 @@ public class Menu
 		Utility.clearScreen();
 		battle.start();
 		Writer.writeOutput();
-		
 	}
-
+	
+	/**
+	 * menu di fine partita
+	 */
 	public static void nuovaPartita()
 	{
+		Writer.writeOutput();
 		MyMenu menu = new MyMenu("Menu di fine partita", SCELTE_FINE_PARTITA);
 		do
 		{
@@ -120,7 +104,9 @@ public class Menu
 					break;
 				case 4:
 					Writer.resetGiocatori();
+					giocatori.removeAll(giocatori);
 					Reader.readGiocatori();
+					Utility.clearScreen();
 					break;
 				case 0:
 					System.out.println(ADDIO);
@@ -133,7 +119,10 @@ public class Menu
 		}
 		while (scelta != 0);
 	}
-
+	
+	/**
+	 * gestitsce inserimento dei golem
+	 */
 	public static void inserimentoGolem()
 	{
 		//sezione golem
@@ -182,6 +171,7 @@ public class Menu
 				}
 				break;
 			case 0:
+				System.out.println(ADDIO);
 				Writer.writeOutput();
 				System.exit(99);
 				break;
@@ -190,8 +180,13 @@ public class Menu
 		}
 	}
 	
+	/**
+	 * menu scelta difficoltà
+	 */
 	public static void sceltaDifficolta()
 	{
+		if(!stessoEquilibrio)
+		{
 		menu = new MyMenu(INSERISCI_DIFFICOLTA, SCELTE_DIFFICOLTA);
 		scelta = menu.scegli();
 		switch (scelta)
@@ -207,6 +202,10 @@ public class Menu
 				break;
 			case 4:
 				nElements = InputDati.leggiInteroPositivo(INSERISCI_NUMERO_ELEMENTI);
+				while(nElements<3 || nElements>BelleStringhe.getElements().size())
+				{
+					nElements=InputDati.leggiInteroPositivo("Inserisci un numero tra 3 e "+BelleStringhe.getElements().size());
+				}
 				break;
 			case 0:
 				System.out.println(ADDIO);
@@ -224,6 +223,9 @@ public class Menu
 		battle = new Battaglia(giocatore1, giocatore2, nElements);
 	}
 	
+	/**
+	 * menu inserimento giocatori
+	 */
 	public static void inserimentoGiocatori()
 	{
 		menu = new MyMenu("Inserimento giocatore", SCELTA_GIOCATORE);
@@ -320,5 +322,21 @@ public class Menu
 				break;
 		}
 		
+	}
+	
+	/**
+	 * resetta le liste dei golem dei giocatori e elimina i nodi e gli archi se si deve rigenerare l'equilibrio
+	 */
+	public static void resettumTotalus()
+	{
+		for (Giocatore g: Menu.getGiocatori())
+		{
+			g.getGolemList().removeAll(g.getGolemList());
+		}
+		if(!stessoEquilibrio)
+		{
+			Equilibrio.getElementi().removeAll(Equilibrio.getElementi());
+			Equilibrio.getArchi().removeAll(Equilibrio.getArchi());
+		}
 	}
 }

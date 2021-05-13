@@ -27,27 +27,7 @@ public class Golem
 		this.vita = vita;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	public ArrayList<Elemento> getStones() {
 		return stones;
-	}
-	
-	public boolean equals(ArrayList <Elemento> elementi)
-	{
-		boolean uguali = true;
-		int i=0;
-		for (Elemento e:elementi)
-		{
-			if (!e.getNome().equals(this.stones.get(i).getNome()))
-			{
-				uguali = false;
-				break;
-			}
-			i++;
-		}
-		return uguali;
 	}
 }

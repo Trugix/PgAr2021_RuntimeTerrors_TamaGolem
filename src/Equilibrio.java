@@ -78,65 +78,6 @@ public class Equilibrio
 		equilibraNodi2();
 	}
 	
-
-	
-	/*public static void equilibraNodi()
-	{
-		int pesoMax = 8, pesoForte = 0, pesoDebole = 0;
-		double bonusPos = 0;
-		boolean last = false, secondToLast = false;
-		for (Elemento n : elementi)
-		{
-			int i = 0;
-			pesoForte = 0;
-			pesoDebole = 0;
-			for (Arco a : n.getContatti())
-			{
-				
-				if (i == n.getContatti().size() - 1) last = true;
-				if (i == n.getContatti().size() - 2) secondToLast = true;
-				if (a.isFixed())
-				{
-					if (a.getPeso() > 0) pesoForte += a.getPeso();
-					else pesoDebole += a.getPeso();
-				}
-				if (!a.isFixed() && !last)
-				{
-					int numero;
-					do
-					{
-						numero = NumeriCasuali.estraiIntero(1, pesoMax) * NumeriCasuali.testaOcroce();
-					}
-					while (secondToLast && (pesoForte + pesoDebole == numero || pesoForte + pesoDebole == -numero));  //todo bilanciare le sfere
-					a.setPeso(numero);
-					if (a.getPeso() > 0) pesoForte += a.getPeso();
-					else pesoDebole += a.getPeso();
-				}
-				if (!a.isFixed() && last)
-				{
-					a.setPeso((-1) * (pesoForte + pesoDebole));
-				}
-				last = false;
-				secondToLast = false;
-				a.setFixed(true);
-				for (Elemento n2 : elementi)
-				{
-					if (n2.getId() == n.getId())
-						continue;
-					for (Arco a2 : n2.getContatti())
-					{
-						if (a2.archiUguali(a))
-						{
-							a2.setFixed(true);
-							a2.setPeso((-1) * a.getPeso());
-						}
-					}
-				}
-				i++;
-			}
-		}
-	}*/
-	
 	/**
 	 * Genera i danni che ogni nodo fa o riceve, controllando che non sia 0 od un numero troppo alto
 	 */

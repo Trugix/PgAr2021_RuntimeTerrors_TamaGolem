@@ -4,7 +4,7 @@ public class Giocatore
 {
 	private String name;
 	private ArrayList<Golem> golemList = new ArrayList<>();
-	private int punteggio=0;
+	private int punteggio;
 	private Golem golemInCampo;
 	
 	public Giocatore(String name, int punteggio)
@@ -27,12 +27,7 @@ public class Giocatore
 	{
 		this.punteggio = punteggio;
 	}
-	
-	public Giocatore(String name)
-	{
-		this.name = name;
-	}
-	
+
 	public void addToGolemList(Golem g)
 	{
 		golemList.add(g);

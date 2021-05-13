@@ -44,8 +44,7 @@ public class Writer
 			xmlw.writeEndElement();//</classifica>
 			xmlw.writeEndDocument(); // scrittura della fine del documento
 			xmlw.flush(); // svuota il buffer e procede alla scrittura
-			xmlw.close(); // chiusura del documento e delle risorse impiegate
-			System.out.println("Output generato correttamente, arrivederci");
+			xmlw.close(); // chiusura del documento e delle risorse impieg
 		}
 		catch (Exception e)
 		{
@@ -91,7 +90,6 @@ public class Writer
 			xmlw.writeEndDocument(); // scrittura della fine del documento
 			xmlw.flush(); // svuota il buffer e procede alla scrittura
 			xmlw.close(); // chiusura del documento e delle risorse impiegate
-			System.out.println("Output generato correttamente, arrivederci");
 		}
 		catch (Exception e)
 		{

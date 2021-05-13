@@ -15,19 +15,9 @@ public class Nodo
 		this.id = n.getId();
 	}
 	
-	public void setContatti(ArrayList<Arco> contatti)
-	{
-		this.contatti = contatti;
-	}
-	
 	public int getId()
 	{
 		return id;
-	}
-	
-	public void setId(int id)
-	{
-		this.id = id;
 	}
 	
 	public void setArray(Arco a)

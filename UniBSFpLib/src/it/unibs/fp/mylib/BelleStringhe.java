@@ -17,8 +17,13 @@ public class BelleStringhe {
 	public static String pickAName() {
         return coolNames.get(NumeriCasuali.estraiIntero(0, coolNames.size() - 1));
     }
-
-	/**
+    
+    public static List<String> getElements()
+    {
+        return Elements;
+    }
+    
+    /**
 	 * prende un nome da una lista
 	 * @return
 	 */

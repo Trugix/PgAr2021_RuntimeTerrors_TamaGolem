@@ -24,11 +24,6 @@ public class Arco
 		return inizio;
 	}
 	
-	public void setInizio(Elemento inizio)
-	{
-		this.inizio = inizio;
-	}
-	
 	/**
 	 * inverte inizio e fine di un arco
 	 */
@@ -52,11 +47,6 @@ public class Arco
 	public Elemento getFine()
 	{
 		return fine;
-	}
-	
-	public void setFine(Elemento fine)
-	{
-		this.fine = fine;
 	}
 	
 	public int getPeso()
@@ -84,9 +74,6 @@ public class Arco
 	 */
 	public boolean archiUguali(Arco a)
 	{
-		if ((this.inizio.equals(a.getInizio())  && this.fine.equals(a.getFine())) || (this.inizio.equals(a.getFine()) && this.fine.equals(a.getInizio())))
-			return true;
-		else
-			return false;
+		return (this.inizio.equals(a.getInizio()) && this.fine.equals(a.getFine())) || (this.inizio.equals(a.getFine()) && this.fine.equals(a.getInizio()));
 	}
 }

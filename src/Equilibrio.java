@@ -6,8 +6,12 @@ public class Equilibrio
 {
 	private static final ArrayList<Elemento> elementi = new ArrayList<>();  //lista di tutti i nodi
 	private static ArrayList<Arco> archi = new ArrayList<>();       //lista di tutti gli archi(indipendente da nodi)
-
-
+	
+	public static ArrayList<Arco> getArchi()
+	{
+		return archi;
+	}
+	
 	public static ArrayList<Elemento> getElementi()
 	{
 		return elementi;
@@ -185,7 +189,6 @@ public class Equilibrio
 					i++;
 				}
 				while (somma != 0); //finché non è equilibrato ripete il procedimento
-
 				vettore = sistemaZeri(n, vettore, c);
 				setPesoArchi(n, vettore);
 				sistemaOpposti(n);
@@ -299,6 +302,7 @@ public class Equilibrio
 		{
 			e.stampaElemento();
 		}
+		InputDati.leggiStringa("Premere invio per continuare...");
 	}
 	
 }

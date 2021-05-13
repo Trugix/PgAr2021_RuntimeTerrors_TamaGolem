@@ -3,10 +3,11 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamConstants;
 import java.io.FileInputStream;
 
-public class Reader {
+public class Reader
+{
 	
 	private static String filename = "classifica.xml";
-
+	
 	/**
 	 * legge il file delle persone, crea un'istanza di persona e la adda alla lista che le contiene
 	 */
@@ -16,18 +17,19 @@ public class Reader {
 		XMLStreamReader xmlr = null;
 		try
 		{
-			int id = 0;
 			String tagName = "";
 			String nome = "";
-			int punteggio=0;
+			int punteggio = 0;
 			xmlif = XMLInputFactory.newInstance();
 			xmlr = xmlif.createXMLStreamReader(new FileInputStream("Classifica/" + filename));
-			while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
-				switch (xmlr.getEventType()) { // switch sul tipo di evento
+			while (xmlr.hasNext())
+			{ // continua a leggere finché ha eventi a disposizione
+				switch (xmlr.getEventType())
+				{ // switch sul tipo di evento
 					case XMLStreamConstants.START_ELEMENT: // inizio di un elemento
 						tagName = xmlr.getLocalName();
 						break;
-						case XMLStreamConstants.END_ELEMENT: // fine di un elemento
+					case XMLStreamConstants.END_ELEMENT: // fine di un elemento
 						if (xmlr.getLocalName().equals("giocatore"))
 							Menu.getGiocatori().add(new Giocatore(nome, punteggio)); //quando arriva all'endtag costruisce la persona
 						break;
@@ -35,7 +37,8 @@ public class Reader {
 						String s = xmlr.getText();
 						if (s.contains("\n") || s.equals("") || s.contains("\t")) //Questo if serve ad evitare che le varie stringhe vengano sostituite da "\n" e sue varianti tipo "\n "
 							break;
-						switch (tagName) {
+						switch (tagName)
+						{
 							case "nome":
 								nome = s;
 								break;

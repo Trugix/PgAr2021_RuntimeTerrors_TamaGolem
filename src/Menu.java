@@ -20,16 +20,12 @@ public class Menu
 	private static final String[] SCELTA_GIOCATORE = {"Nuovo giocatore", "Carica giocatore"};
 	private static final String ADDIO = "Arrivederci";
 	
-	private static boolean primo=true;
-	private static String nome1;
-	private static String nome2;
 	private static int scelta;
 	private static Battaglia battle = null;
 	private static MyMenu menu;
-	private static boolean stessoEquilibrio=false;
+	private static boolean stessoEquilibrio = false;
 	private static int nElements;
 	private static int nGolems;
-	private static int nStones;
 	
 	private static Giocatore giocatore1, giocatore2;
 	
@@ -65,21 +61,22 @@ public class Menu
 	{
 		giocatorDaOrdinare.addAll(giocatori);
 		Utility.clearScreen();
-		System.out.printf("%10s %15s %10s\n","Posizione","Nome","Punteggio");
-		int i =1;
+		System.out.println("Classifica:");
+		System.out.printf("%10s %15s %10s\n", "Posizione", "Nome", "Punteggio");
+		int i = 1;
 		do
 		{
-			int max = giocatorDaOrdinare.get(0).getPunteggio();
-			Giocatore massimo = giocatorDaOrdinare.get(0);
-			for (int j = 0; j < giocatorDaOrdinare.size(); j++)
+			int max = giocatoriDaOrdinare.get(0).getPunteggio();
+			Giocatore massimo = giocatoriDaOrdinare.get(0);
+			for (Giocatore giocatore : giocatoriDaOrdinare)
 			{
-				if (giocatorDaOrdinare.get(j).getPunteggio() > max)
+				if (giocatore.getPunteggio() > max)
 				{
-					max = giocatorDaOrdinare.get(j).getPunteggio();
-					massimo = giocatorDaOrdinare.get(j);
+					max = giocatore.getPunteggio();
+					massimo = giocatore;
 				}
 			}
-			System.out.printf("%10s %15s %10s\n", i , massimo.getName(), max);
+			System.out.printf("%10s %15s %10s\n", i, massimo.getName(), max);
 			i++;
 			giocatorDaOrdinare.remove(massimo);
 		}
@@ -113,7 +110,9 @@ public class Menu
 					Equilibrio.stampaEquilibrio();
 					break;
 				case 2:
-					stessoEquilibrio=InputDati.yesOrNo("Vuoi usare lo stesso equilibrio?");
+					stessoEquilibrio = InputDati.yesOrNo("Vuoi usare lo stesso equilibrio?");
+					resettumTotalus();
+					Utility.clearScreen();
 					ilMenu();
 					break;
 				case 3:
@@ -124,14 +123,15 @@ public class Menu
 					Reader.readGiocatori();
 					break;
 				case 0:
-					Writer.writeOutput();
+					System.out.println(ADDIO);
 					System.exit(99);
 					break;
 				default:
 					System.out.println("Non dovresti essere qui  scelta nuova partità");
 					break;
 			}
-		}while (scelta!=0);
+		}
+		while (scelta != 0);
 	}
 
 	public static void inserimentoGolem()
@@ -159,7 +159,7 @@ public class Menu
 					battle.getPlayer2().addToGolemList(new Golem(nome));
 				}
 				break;
-
+			
 			case 2:        //nomi scelti dall'utente
 				for (int i = 0; i < nGolems; i++)
 				{
@@ -199,28 +199,28 @@ public class Menu
 			case 1:
 				nElements = NumeriCasuali.estraiIntero(3, 5);
 				break;
-
 			case 2:
 				nElements = NumeriCasuali.estraiIntero(6, 8);
 				break;
-
 			case 3:
 				nElements = NumeriCasuali.estraiIntero(9, 10);
 				break;
-
 			case 4:
 				nElements = InputDati.leggiInteroPositivo(INSERISCI_NUMERO_ELEMENTI);
 				break;
 			case 0:
+				System.out.println(ADDIO);
 				Writer.writeOutput();
 				System.exit(99);
 				break;
 			default:
 				System.out.println("HOW the fuck are u here difficoltà");
+				break;
 		}
-		nStones = ((int) Math.ceil(((double) nElements + 1.0) / 3.0) + 1);                                            //genera numero pietre per golem
-		nGolems = (int) Math.ceil((double) ((nElements - 1) * (nElements - 2)) / (double) (2 * nStones));       //genera numero golem
-		if(!stessoEquilibrio) Equilibrio.generaEquilibrio(nElements);
+			int nStones = ((int) Math.ceil(((double) nElements + 1.0) / 3.0) + 1);                                            //genera numero pietre per golem
+			nGolems = (int) Math.ceil((double) ((nElements - 1) * (nElements - 2)) / (double) (2 * nStones));       //genera numero golem
+			Equilibrio.generaEquilibrio(nElements);
+		}
 		battle = new Battaglia(giocatore1, giocatore2, nElements);
 	}
 	
@@ -230,51 +230,77 @@ public class Menu
 		int scelta = menu.scegli();
 		switch (scelta)
 		{
-			case 1: // nuovo giocatore
+			case 1:
+				// nuovo giocatore
+				String nome1;
+				String nome2;
+				boolean trovato;
 				do
 				{
+					System.out.print("\nGiocatori esistenti: ");
+					for (int i = 0; i < giocatori.size(); i++)
+					{
+						if (i == giocatori.size()-1 )
+							System.out.print(giocatori.get(i).getName());
+						else
+							System.out.print(giocatori.get(i).getName() + ", ");
+					}
 					do
 					{
+						trovato = false;
 						nome1 = InputDati.leggiStringaNonVuota(INSERISCI_NOME1);
 						nome2 = InputDati.leggiStringaNonVuota(INSERISCI_NOME2);
+						for (Giocatore g:giocatori)
+						{
+							if (g.getName().equals(nome1) || g.getName().equals(nome2))
+							{
+								trovato = true;
+								System.out.println("\nUno dei due giocatori è già presente nella lista dei giocatori, inserire un nuovo nome");
+								break;
+							}
+						}
 						if (nome1.trim().equals(nome2.trim()))
 						{
 							System.out.println("\nI nomi dei giocatori devono essere diversi");
 						}
-					}while (nome1.trim().equals(nome2.trim()));
+					}
+					while (nome1.trim().equals(nome2.trim()) || trovato);
 				}
 				while (!InputDati.yesOrNo("\nSei sicuro di usare questi nomi?"));
 				giocatore1 = new Giocatore(nome1, 0);
 				giocatore2 = new Giocatore(nome2, 0);
-			break;
-			case 2: // carica giocatore\
+				giocatori.add(giocatore1);
+				giocatori.add(giocatore2);
+				break;
+			case 2:  // carica giocatore
 				String nome;
 				boolean scelto;
-				ArrayList <Giocatore> giocatoriSelezionabili = new ArrayList<>();
+				ArrayList<Giocatore> giocatoriSelezionabili = new ArrayList<>();
 				giocatoriSelezionabili.addAll(giocatori);
-				for (int i=1;i<=2;i++)
+				for (int i = 1; i <= 2; i++)
 				{
 					Utility.clearScreen();
 					System.out.print("\n\nSelezionare uno dei seguenti: ");
-					for (int j=0;j<giocatoriSelezionabili.size();j++)
+					for (int j = 0; j < giocatoriSelezionabili.size(); j++)
 					{
-							if(j==giocatoriSelezionabili.size()-1) System.out.print(giocatoriSelezionabili.get(j).getName());
-							else System.out.print(giocatoriSelezionabili.get(j).getName()+", ");
+						if (j == giocatoriSelezionabili.size() - 1)
+							System.out.print(giocatoriSelezionabili.get(j).getName());
+						else System.out.print(giocatoriSelezionabili.get(j).getName() + ", ");
 					}
 					do
 					{
-						scelto =false;
-						nome = InputDati.leggiStringaNonVuota("\nInserire il nome del giocatore "+i+" : ");
-						for (Giocatore g:giocatoriSelezionabili)
+						scelto = false;
+						nome = InputDati.leggiStringaNonVuota("\nInserire il nome del giocatore " + i + " : ");
+						for (Giocatore g : giocatoriSelezionabili)
 						{
-							if (g.getName().equals(nome) && i==1)
+							if (g.getName().equals(nome) && i == 1)
 							{
 								scelto = true;
 								giocatore1 = g;
 								giocatoriSelezionabili.remove(g);
 								break;
 							}
-							if (g.getName().equals(nome) && i==2)
+							if (g.getName().equals(nome) && i == 2)
 							{
 								scelto = true;
 								giocatore2 = g;
@@ -285,11 +311,13 @@ public class Menu
 					}
 					while (!scelto);
 				}
-			break;
+				giocatoriSelezionabili.removeAll(giocatoriSelezionabili);
+				break;
 			case 0:
+				System.out.println(ADDIO);
 				Writer.writeOutput();
 				System.exit(99);
-			break;
+				break;
 		}
 		
 	}

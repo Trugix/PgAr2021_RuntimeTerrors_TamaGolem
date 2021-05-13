@@ -3,15 +3,15 @@
 	<giocatori>
 		<giocatore id="0">
 			<nome>Ruggero</nome>
-			<punteggio>0</punteggio>
+			<punteggio>3</punteggio>
 		</giocatore>
 		<giocatore id="1">
 			<nome>Edoardo</nome>
-			<punteggio>0</punteggio>
+			<punteggio>2</punteggio>
 		</giocatore>
 		<giocatore id="2">
 			<nome>Andrea</nome>
-			<punteggio>0</punteggio>
+			<punteggio>1</punteggio>
 		</giocatore>
 		</giocatori>
 </classifica>

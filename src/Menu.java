@@ -10,7 +10,7 @@ public class Menu
 	private static final String INSERISCI_NUMERO_ELEMENTI = "\nInserisci il numero degli elementi da usare:";
 	
 	private static final String INSERISCI_DIFFICOLTA = "DIFFICOLTÀ\ninfluenzerà il numero degli elementi";
-	private static final String[] SCELTE_DIFFICOLTA = {"Facile", "Intermedio", "Difficile", "Custom"/*, Distruggi computer*/};
+	private static final String[] SCELTE_DIFFICOLTA = {"Facile", "Intermedio", "Difficile", "Custom", "Distruggi computer"};
 	private static final String GOLEMS = "GOLEMS";
 	private static final String[] SCELTE_GOLEMS = {"Rent a Golem", "Personalizzati"};
 	
@@ -202,10 +202,13 @@ public class Menu
 				break;
 			case 4:
 				nElements = InputDati.leggiInteroPositivo(INSERISCI_NUMERO_ELEMENTI);
-				while(nElements<3 || nElements>BelleStringhe.getElements().size())
+				while(nElements<3 || nElements>BelleStringhe.getElements().size()-1)
 				{
 					nElements=InputDati.leggiInteroPositivo("Inserisci un numero tra 3 e "+BelleStringhe.getElements().size()+": ");
 				}
+				break;
+			case 5:
+				nElements=BelleStringhe.getElements().size()-1;
 				break;
 			case 0:
 				System.out.println(ADDIO);

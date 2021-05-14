@@ -13,5 +13,13 @@
 			<nome>Andrea</nome>
 			<punteggio>1</punteggio>
 		</giocatore>
+		<giocatore id="3">
+			<nome>ciao</nome>
+			<punteggio>0</punteggio>
+		</giocatore>
+		<giocatore id="4">
+			<nome>coso</nome>
+			<punteggio>0</punteggio>
+		</giocatore>
 		</giocatori>
 </classifica>

@@ -168,7 +168,7 @@ public class Battaglia
 	{
 		if(player1.getGolemList().size() == 0 && player2.getGolemList().size() == 0) //Nel raro caso di un pareggio
 		{
-			System.out.println("Lo scontro è un pareggio!");
+			System.out.println("\nLo scontro è un pareggio!");
 		}
 		else
 		{
@@ -185,7 +185,7 @@ public class Battaglia
 				}
 			}
 		}
-		InputDati.leggiStringa("Premi invio per passare al menu di fine partita...");
+		InputDati.leggiStringa("\nPremi invio per passare al menu di fine partita...");
 		Utility.clearScreen();
 		Menu.nuovaPartita(); //chiamo il menu per gestire una nuova partita
 	}
@@ -326,6 +326,7 @@ public class Battaglia
 				if (!trovato) System.out.println("\nElemento non presente\n");
 			}
 			while (!trovato);
+			Utility.clearScreen();
 		}
 		Utility.clearScreen();
 	}

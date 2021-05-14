@@ -6,7 +6,7 @@ public class Equilibrio
 {
 	private static final ArrayList<Elemento> elementi = new ArrayList<>();  //lista di tutti i nodi
 	private static ArrayList<Arco> archi = new ArrayList<>();       //lista di tutti gli archi(indipendente da nodi)
-	
+	private static ArrayList<String> listaNomiElementi = new ArrayList<>();
 	public static ArrayList<Arco> getArchi()
 	{
 		return archi;
@@ -18,34 +18,18 @@ public class Equilibrio
 	}
 
 	/**
-	 * cerca se esiste già un elemento con questo nome
-	 * @param nome	il nome da cercare
-	 * @return true se esiste già
-	 */
-	private static boolean cercaEle(String nome)
-	{
-		for (Elemento e: elementi)
-		{
-			if(e.getNome().equals(nome))
-				return true;
-		}
-		return false;
-	}
-
-	/**
 	 * genera tutti i nodi, e tutti gli associamenti, poi associa a ogni nodo i suoi collegamenti con gli altri nodi
 	 * @param nElements il numero di nodi da generare
 	 */
 	public static void generaEquilibrio(int nElements)
 	{
+		listaNomiElementi.addAll(BelleStringhe.getElements());
 		boolean trovato;
 		for (int i = 0; i < nElements; i++)
 		{
 			String nomeEle;
-			do
-			{
-				nomeEle = BelleStringhe.pickAnElement();
-			}while(cercaEle(nomeEle));
+			nomeEle = BelleStringhe.pickAString(listaNomiElementi);
+			listaNomiElementi.remove(nomeEle);
 			Elemento e = new Elemento(i, nomeEle);
 			elementi.add(e);
 		}
@@ -163,10 +147,10 @@ public class Equilibrio
 			{
 				for (int k = c; k < n.getContatti().size(); k++)
 				{
-					if (v[k] != 1 && k != j)
+					if (v[k] != 1 && v[k] != 2 && k != j)
 					{
-						v[k]--;
-						v[j]++;
+						v[k]-=2;
+						v[j]+=2;
 						break;
 					}
 				}

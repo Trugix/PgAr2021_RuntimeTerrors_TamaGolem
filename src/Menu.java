@@ -126,6 +126,8 @@ public class Menu
 	public static void inserimentoGolem()
 	{
 		//sezione golem
+		ArrayList<String> listaNomiGolems = new ArrayList<>();
+		listaNomiGolems.addAll(BelleStringhe.getCoolNames());
 		menu = new MyMenu(GOLEMS, SCELTE_GOLEMS);
 		scelta = menu.scegli();
 		String nome;
@@ -134,17 +136,11 @@ public class Menu
 			case 1:        //nomi scelti dal programma
 				for (int i = 0; i < nGolems; i++)
 				{
-					do
-					{
-						nome = BelleStringhe.pickAName();
-					}
-					while (battle.cercaGolemNome(nome));
+					nome = BelleStringhe.pickAString(listaNomiGolems);
+					listaNomiGolems.remove(nome);
 					battle.getPlayer1().addToGolemList(new Golem(nome));
-					do
-					{
-						nome = BelleStringhe.pickAName();
-					}
-					while (battle.cercaGolemNome(nome));
+					nome = BelleStringhe.pickAString(listaNomiGolems);
+					listaNomiGolems.remove(nome);
 					battle.getPlayer2().addToGolemList(new Golem(nome));
 				}
 				break;
@@ -204,10 +200,11 @@ public class Menu
 				nElements = InputDati.leggiInteroPositivo(INSERISCI_NUMERO_ELEMENTI);
 				while(nElements<3 || nElements>BelleStringhe.getElements().size()-1)
 				{
-					nElements=InputDati.leggiInteroPositivo("Inserisci un numero tra 3 e "+BelleStringhe.getElements().size()+": ");
+					nElements=InputDati.leggiInteroPositivo("Inserisci un numero tra 3 e "+(BelleStringhe.getElements().size()-1)+": ");
 				}
 				break;
 			case 5:
+				System.out.println("Ci vorrà un po'.... Ti aspettavi un algoritmo un efficiente?");
 				nElements=BelleStringhe.getElements().size()-1;
 				break;
 			case 0:

@@ -1,5 +1,6 @@
 package it.unibs.fp.mylib;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
@@ -14,22 +15,27 @@ public class BelleStringhe {
 	 * prende un nome da una lista
 	 * @return
 	 */
-	public static String pickAName() {
-        return coolNames.get(NumeriCasuali.estraiIntero(0, coolNames.size() - 1));
-    }
     
     public static List<String> getElements()
     {
         return Elements;
     }
-    
-    /**
-	 * prende un nome da una lista
-	 * @return
-	 */
-    public static String pickAnElement() {
-        return Elements.get(NumeriCasuali.estraiIntero(0, Elements.size() - 1));
+
+    public static List<String> getCoolNames() {
+        return coolNames;
     }
+
+    /**
+     * prende un nome da una lista
+     * @return
+     */
+    public static String pickAString(ArrayList<String> lista)
+    {
+        return lista.get(NumeriCasuali.estraiIntero(0, lista.size() - 1));
+    }
+
+
+
 
     public static String incornicia(String s) {
         StringBuffer res = new StringBuffer();

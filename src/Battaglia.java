@@ -144,7 +144,7 @@ public class Battaglia
 	 */
 	public void start()
 	{
-		System.out.println("Numero di elementi: " + nElements + "\nNumero di pietre totali: " + nSpareStones + "\nNumero di pietre per ogni elemento: " + nSpareStonesforElement + "\nNumero di golem per giocatore: " + nGolems + "\nNumero di pietre per golem: " + nStonesInGolem + "\nVita dei golem: " + Golem.VITA_MAX + "\n\n");
+		System.out.println("Numero di elementi: " + nElements + "\nNumero di pietre totali: " + nSpareStones + "\nNumero di pietre per ogni elemento: " + nSpareStonesforElement + "\nNumero di golem per giocatore: " + nGolems + "\nNumero di pietre per golem: " + nStonesInGolem + "\nVita dei golem: " + Golem.VITA_MAX + "\n");
 		InputDati.leggiStringaNonVuota("\nPremere invio per iniziare lo scontro....");
 		if (Math.random()>0.50) //decidere quale dei due giocatori evoca per primo
 		{
@@ -219,7 +219,7 @@ public class Battaglia
 					giraPietre(player2.getGolemInCampo().getStones());
 					if (player1.getGolemInCampo().getVita() > 0 && player2.getGolemInCampo().getVita() > 0) // se entrambi i golem sono ancora vivi stampa
 						InputDati.leggiStringa("\nPremi invio per passare al prossimo lancio... ");
-					Utility.clearScreen();
+					System.out.println("\n\n");
 				}
 				if (player1.getGolemInCampo().getVita() <= 0)
 					morteGolem(player1,player2);
@@ -306,12 +306,12 @@ public class Battaglia
 				{
 					if (scelta.equals(nomiPietre.get(j).toUpperCase()))
 					{
+						trovato = true;
 						if (numeroPietre.get(j) == 0)
 						{
 							System.out.println("\nQueste pietre sono finite");
 							break;
 						}
-						trovato = true;
 						numeroPietre.set(j, numeroPietre.get(j) - 1);  // aggiorna la quantità disponibile di pietre di questo tipo
 						for (Elemento e : Equilibrio.getElementi()) // for che aggiunge la pietra al golem
 						{

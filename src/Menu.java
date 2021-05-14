@@ -204,7 +204,7 @@ public class Menu
 				nElements = InputDati.leggiInteroPositivo(INSERISCI_NUMERO_ELEMENTI);
 				while(nElements<3 || nElements>BelleStringhe.getElements().size())
 				{
-					nElements=InputDati.leggiInteroPositivo("Inserisci un numero tra 3 e "+BelleStringhe.getElements().size());
+					nElements=InputDati.leggiInteroPositivo("Inserisci un numero tra 3 e "+BelleStringhe.getElements().size()+": ");
 				}
 				break;
 			case 0:
@@ -318,7 +318,7 @@ public class Menu
 			case 0:
 				System.out.println(ADDIO);
 				Writer.writeOutput();
-				System.exit(99);
+				System.exit(69420);
 				break;
 		}
 		
